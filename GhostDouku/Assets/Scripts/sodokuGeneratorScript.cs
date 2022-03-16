@@ -201,7 +201,8 @@ public class sodokuGeneratorScript : MonoBehaviour
 
         setUp();
         fillValues();
-        //printSodoku();
+        removeKDigits();
+        printSodoku();
         return mat;
 
     }
@@ -223,6 +224,11 @@ public class sodokuGeneratorScript : MonoBehaviour
 
         return mat1D;
 
+    }
+
+    private void Start()
+    {
+        getSodoku(9, 20);
     }
 
 }
