@@ -1,75 +1,234 @@
+
+/****************************************
+ * Sodoku Generator Script
+ * Adapted from:
+ * https://www.geeksforgeeks.org/program-sudoku-generator/
+ ****************************************/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class sodokuGeneratorScript : MonoBehaviour
 {
-    const int NUMROWS = 9;
-    const int NUMCOLS = 9;
-    static int[] board = new int[NUMROWS * NUMCOLS];
+    private static int[,] mat;
+    private static int N; //Number of ros / cols
+    private static int SQRN; //Square root of N
+    private static int K; //Number of missing digits
+    
+    private static void setUp()
+    {
+        //Get square root of N
+        SQRN = (int)Mathf.Sqrt(N);
+
+        mat = new int[N, N];
+    }
+
+    //Sodoku Generator
+    private static void fillValues()
+    {
+        fillDiagonal();
+
+        fillRemaining(0, SQRN);
+
+        removeKDigits();
+    }
+
+    //Fill diagonal
+    private static void fillDiagonal()
+    {
+        for(int i = 0; i <N; i += SQRN)
+        {
+            fillBox(i, i);
+        }
+    }
+
+    //Returns false if given 3x3 block contains num
+    private static bool unUsedInBox(int rowStart, int colStart, int num)
+    {
+        for(int i = 0; i < SQRN; i++)
+        {
+            for(int j = 0; j < SQRN; j++)
+            {
+                if (mat[rowStart + i, colStart + j] == num) return false;                    
+            }
+        }
+        return true;
+    }
+
+    //Fill a 3x3 matrix
+    private static void fillBox(int row, int col)
+    {
+        int num;
+        for(int i = 0; i < SQRN; i++)
+        {
+            for (int j = 0; j < SQRN; j++)
+            {
+                do
+                {
+                    num = Random.Range(1, N + 1);
+
+                } while (!unUsedInBox(row, col, num));
+            }
+        }
+    }
+
+    //Check if safe to put in cell
+    private static bool checkIfSafe(int i, int j, int num)
+    {
+        return (unUsedInRow(i, num) &&
+                unUsedInCol(j, num) &&
+                unUsedInBox(i - i % SQRN, j - j % SQRN, num));
+    }
+
+    //Check in the row for existence
+    private static bool unUsedInRow(int i, int num)
+    {
+        for(int j = 0; j < N; j++)
+        {
+            if(mat[i, j] == num)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //Check in the col for existence
+    private static bool unUsedInCol(int j, int num)
+    {
+        for(int i = 0; i < N; i++)
+        {
+            if(mat[i,j] == num)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //A recursive function to fill remaining matrix
+    private static bool fillRemaining(int i, int j)
+    {
+        if(j >= N && i < N - 1)
+        {
+            i = i + 1;
+            j = 0;
+        }
+        if (i >= N && j >= N)
+        {
+            return true;
+        }
+        if (i < SQRN)
+        {
+            if (j < SQRN)
+            {
+                j = SQRN;
+            }
+        }
+        else if (i < N - SQRN)
+        {
+            if (j == (int)(i / SQRN) * SQRN)
+            {
+                j += SQRN;
+            }
+        }
+        else if (j == N - SQRN) 
+        {
+            i += 1;
+            j = 0;
+            if (i >= N)
+            {
+                return true;
+            }
+        }
+
+        for (int num = 1; num <= N; num++)
+        {
+            if (checkIfSafe(i, j, num))
+            {
+                mat[i, j] = num;
+                if(fillRemaining(i, j+1))
+                {
+                    return true;
+                }
+                mat[i, j] = 0;
+            }
+        }
+        return false;
+    }
+
+    //Remove K digits to complete the game
+    private static void removeKDigits()
+    {
+        int count = K;
+        while (count != 0)
+        {
+            int cellID = Random.Range(0, N * N - 1);
+
+            int i = cellID / N;
+            int j = cellID % N;
+            if (j != 0)
+            {
+                j -= 1;
+            }
+
+            if(mat[i,j] != 0)
+            {
+                count--;
+                mat[i, j] = 0;
+            }
+        }
+    }
+
+    private static void printSodoku()
+    {
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                print(mat[i, j]);
+            }
+        }
+    }
+
+    //Generate the sodoku
+    public static int[,] getSodoku(int width, int numRemoved)
+    {
+        N = width;
+        K = numRemoved;
+
+        setUp();
+        fillValues();
+        removeKDigits();
+        printSodoku();
+        return mat;
+
+    }
+
+    public static int[] getSodoku1D(int width, int numRemoved)
+    {
+        mat = getSodoku(width, numRemoved);
+        int[] mat1D = new int[N * N];
+
+        int index = 0;
+        for(int j = 0; j < N; j++)
+        {
+            for(int i = 0; i < j; i++)
+            {                
+                mat1D[index] = mat[i, j];
+                index++;
+            }
+        }
+
+        return mat1D;
+
+    }
 
     private void Start()
     {
-        generateNewSodoku();
-    }
-    public static int[] generateNewSodoku()
-    {
-        
-
-        //Initialise the board array to all 0s       
-        for(int i = 0; i < board.Length; i++)
-        {
-            board[i] = 0;
-        }
-
-        //Fill diagonal boxes
-
-        //Fill rest of non diagonal boxes
-            //For every cell, check each number 1-9 to make sure its safe to place
-
-        //Once filled, remove x elements
-
-        foreach(int i in board)
-        {
-            print(i);
-        }
-        return null;
+        getSodoku(9, 20);
     }
 
-    private static int[] scatterArray(int[] myArray) //Randomise the order of elements in array
-    {
-        for(int i = 0; i < myArray.Length; i++)
-        {
-            int currMax = myArray.Length - 1 - i;
-            int swapIndex = Random.Range(0, currMax);
-
-            if(swapIndex != currMax)
-            {
-                int temp = myArray[currMax];
-                myArray[currMax] = myArray[swapIndex];
-                myArray[swapIndex] = temp;
-            }
-        }
-        return myArray;
-    }
-
-    private static bool isInBox(int index, int num)
-    {
-        return false;
-    }
-    private static bool isInCol(int index, int num)
-    {
-        return false;
-    }
-    
-    private static bool isInRow(int index, int num)
-    {
-        int startIndex = index - index % 9;
-        for(int i = 0; i < 9; i++)
-        {
-            if (board[i + startIndex] == num) return true;
-        }
-
-        return false;
-    }
 }
