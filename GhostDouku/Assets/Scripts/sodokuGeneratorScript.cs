@@ -206,4 +206,23 @@ public class sodokuGeneratorScript : MonoBehaviour
 
     }
 
+    public static int[] getSodoku1D(int width, int numRemoved)
+    {
+        mat = getSodoku(width, numRemoved);
+        int[] mat1D = new int[N * N];
+
+        int index = 0;
+        for(int j = 0; j < N; j++)
+        {
+            for(int i = 0; i < j; i++)
+            {                
+                mat1D[index] = mat[i, j];
+                index++;
+            }
+        }
+
+        return mat1D;
+
+    }
+
 }
