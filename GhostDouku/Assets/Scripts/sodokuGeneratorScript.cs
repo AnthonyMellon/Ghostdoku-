@@ -1,234 +1,208 @@
-
-/****************************************
- * Sodoku Generator Script
- * Adapted from:
- * https://www.geeksforgeeks.org/program-sudoku-generator/
- ****************************************/
-
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class sodokuGeneratorScript : MonoBehaviour
 {
-    private static int[,] mat;
-    private static int N; //Number of ros / cols
-    private static int SQRN; //Square root of N
-    private static int K; //Number of missing digits
-    
-    private static void setUp()
+    private static int[] board;
+    private static int numDigits;
+    private static int sqrtNumDigits;
+    public static int[] getSudoku(int numdigits, int numRemoved)
     {
-        //Get square root of N
-        SQRN = (int)Mathf.Sqrt(N);
+        numDigits = numdigits;
+        sqrtNumDigits = (int)Mathf.Sqrt(numDigits);
+        board = new int[numDigits * numDigits];
 
-        mat = new int[N, N];
+        fillSudoku();
+
+        return board;
     }
 
-    //Sodoku Generator
-    private static void fillValues()
+    private static void fillSudoku()
     {
-        fillDiagonal();
-
-        fillRemaining(0, SQRN);
-
-        removeKDigits();
-    }
-
-    //Fill diagonal
-    private static void fillDiagonal()
-    {
-        for(int i = 0; i <N; i += SQRN)
+        //Fill the 3 diagonal boxes
+        for (int i = 0; i < sqrtNumDigits; i++)
         {
-            fillBox(i, i);
+            fillBoxNoChecks(i + i * sqrtNumDigits);
         }
+
+        //Fill the remaining boxes
+        for(int i = 0; i < numDigits - sqrtNumDigits; i++)
+        {
+            int boxNum = Mathf.FloorToInt(i / sqrtNumDigits) + 1 + i;
+            fillBoxWithChecks(boxNum);
+        }
+
+        //Remove X amount of spaces
     }
 
-    //Returns false if given 3x3 block contains num
-    private static bool unUsedInBox(int rowStart, int colStart, int num)
+    private static void fillBoxNoChecks(int boxNum)
     {
-        for(int i = 0; i < SQRN; i++)
+        int[] boxContents = newNumSet();
+        int index = 0;
+        for(int i = 0; i < sqrtNumDigits; i++)
         {
-            for(int j = 0; j < SQRN; j++)
+            for(int j = 0; j < sqrtNumDigits; j++)
             {
-                if (mat[rowStart + i, colStart + j] == num) return false;                    
+                int boxIndex;
+                int indexOffset;
+                int trueIndex;
+
+                //get the board index relative to the box (0 - numdigits)
+                boxIndex = j + i * numDigits;
+
+                //offset the board index based off box num
+                indexOffset = (boxNum % sqrtNumDigits) * sqrtNumDigits; //Horizontal offset
+                indexOffset += (Mathf.FloorToInt(boxNum / sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
+
+                trueIndex = boxIndex + indexOffset;
+
+                board[trueIndex] = boxContents[index];
+                index++;
             }
         }
-        return true;
+        
     }
 
-    //Fill a 3x3 matrix
-    private static void fillBox(int row, int col)
+    private static void fillBoxWithChecks(int boxNum)
     {
-        int num;
-        for(int i = 0; i < SQRN; i++)
+        int[] boxContents = newNumSet();
+        for (int i = 0; i < sqrtNumDigits; i++)
         {
-            for (int j = 0; j < SQRN; j++)
+            for (int j = 0; j < sqrtNumDigits; j++)
             {
+                int boxIndex;
+                int indexOffset;
+                int trueIndex;
+
+                //get the board index relative to the box (0 - numdigits)
+                boxIndex = j + i * numDigits;
+
+                //offset the board index based off box num
+                indexOffset = (boxNum % sqrtNumDigits) * sqrtNumDigits; //Horizontal offset
+                indexOffset += (Mathf.FloorToInt(boxNum/sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
+
+                trueIndex = boxIndex + indexOffset;
+                //print(trueIndex);
+
+                bool numPlaced = false;
+                int row = Mathf.FloorToInt(trueIndex / numDigits);
+                int col = trueIndex % numDigits;
+
+                /* at the true index
+                 * take the first number of the box contents
+                 * check if its already in the row, or col, or is 0
+                 * if no place it
+                 * if yes try next number in box contents
+                 */
+
+                int count = 0;
                 do
                 {
-                    num = Random.Range(1, N + 1);
+                    int currentNum = boxContents[count];
+                    if(!isInRow(currentNum, row) && !isInCol(currentNum, row) && currentNum != -1) //If the number wanting to be palced is legal
+                    {
+                        board[trueIndex] = currentNum;
+                        boxContents[count] = -1;
+                        numPlaced = true;
+                    }
+                    count++;
 
-                } while (!unUsedInBox(row, col, num));
+                } while (!numPlaced && count < numDigits);
+                 
+
+
+                //do //Attempt to place a number in a cell
+                //{
+                //    print(k % 9);
+
+                //    if (boxContents[k%9] != 0 && !isInRow(boxContents[k%9], row) && !isInCol(boxContents[k%9], col))
+                //    {
+                //        board[trueIndex] = boxContents[k];
+                //        boxContents[k] = 0;
+                //        numPlaced = true;
+                //    }
+                //    k++;
+
+                //} while (!numPlaced && k < 100);
             }
         }
     }
 
-    //Check if safe to put in cell
-    private static bool checkIfSafe(int i, int j, int num)
+    private static bool isInRow(int num, int row)
     {
-        return (unUsedInRow(i, num) &&
-                unUsedInCol(j, num) &&
-                unUsedInBox(i - i % SQRN, j - j % SQRN, num));
-    }
-
-    //Check in the row for existence
-    private static bool unUsedInRow(int i, int num)
-    {
-        for(int j = 0; j < N; j++)
+        for(int i = 0; i < board.Length; i++) //Loop through the whole board
         {
-            if(mat[i, j] == num)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    //Check in the col for existence
-    private static bool unUsedInCol(int j, int num)
-    {
-        for(int i = 0; i < N; i++)
-        {
-            if(mat[i,j] == num)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    //A recursive function to fill remaining matrix
-    private static bool fillRemaining(int i, int j)
-    {
-        if(j >= N && i < N - 1)
-        {
-            i = i + 1;
-            j = 0;
-        }
-        if (i >= N && j >= N)
-        {
-            return true;
-        }
-        if (i < SQRN)
-        {
-            if (j < SQRN)
-            {
-                j = SQRN;
-            }
-        }
-        else if (i < N - SQRN)
-        {
-            if (j == (int)(i / SQRN) * SQRN)
-            {
-                j += SQRN;
-            }
-        }
-        else if (j == N - SQRN) 
-        {
-            i += 1;
-            j = 0;
-            if (i >= N)
+            if(Mathf.FloorToInt(i / numDigits) == row && num == board[i])
             {
                 return true;
             }
         }
 
-        for (int num = 1; num <= N; num++)
-        {
-            if (checkIfSafe(i, j, num))
-            {
-                mat[i, j] = num;
-                if(fillRemaining(i, j+1))
-                {
-                    return true;
-                }
-                mat[i, j] = 0;
-            }
-        }
         return false;
     }
 
-    //Remove K digits to complete the game
-    private static void removeKDigits()
+    private static bool isInCol(int num, int col)
     {
-        int count = K;
-        while (count != 0)
+        for (int i = 0; i < board.Length; i++) //Loop through the whole board
         {
-            int cellID = Random.Range(0, N * N - 1);
-
-            int i = cellID / N;
-            int j = cellID % N;
-            if (j != 0)
+            if (i % numDigits == col && num == board[i])
             {
-                j -= 1;
-            }
-
-            if(mat[i,j] != 0)
-            {
-                count--;
-                mat[i, j] = 0;
+                return true;
             }
         }
+
+        return false;
     }
 
-    private static void printSodoku()
+    private static int[] newNumSet()
     {
-        for (int i = 0; i < N; i++)
+        int[] numSet = new int[numDigits];
+        for (int i = 0; i < numDigits; i++)
         {
-            for (int j = 0; j < N; j++)
+            numSet[i] = i + 1;
+        }
+
+        numSet = shuffleArray(numSet);
+
+        return numSet;
+    }
+
+    private static int[] shuffleArray(int[] myArray)
+    {
+        //Fisher-Yates shuffle
+        for (int i = myArray.Length - 1; i >= 0; i--)
+        {
+            int j = Random.Range(0, i);
+            if (j != i)
             {
-                print(mat[i, j]);
+                int temp = myArray[j];
+                myArray[j] = myArray[i];
+                myArray[i] = temp;
             }
         }
+
+        return myArray;
     }
 
-    //Generate the sodoku
-    public static int[,] getSodoku(int width, int numRemoved)
+    private void printSudoku()
     {
-        N = width;
-        K = numRemoved;
-
-        setUp();
-        fillValues();
-        removeKDigits();
-        printSodoku();
-        return mat;
-
-    }
-
-    public static int[] getSodoku1D(int width, int numRemoved)
-    {
-        mat = getSodoku(width, numRemoved);
-        int[] mat1D = new int[N * N];
-
+        string currentLine;
         int index = 0;
-        for(int j = 0; j < N; j++)
+        for (int i = 0; i < numDigits; i++)
         {
-            for(int i = 0; i < j; i++)
-            {                
-                mat1D[index] = mat[i, j];
+            currentLine = "";
+            for (int j = 0; j < numDigits; j++)
+            {
+                currentLine = $"{currentLine}{board[index]}";
                 index++;
             }
+            print(currentLine);
         }
-
-        return mat1D;
-
     }
 
     private void Start()
     {
-        getSodoku(9, 20);
+        getSudoku(9, 20);
+        printSudoku();
     }
 
 }
