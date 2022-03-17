@@ -25,7 +25,7 @@ public class sodokuGeneratorScript : MonoBehaviour
         }
 
         //Fill the remaining boxes
-        for(int i = 0; i < numDigits - sqrtNumDigits; i++)
+        for (int i = 0; i < numDigits - sqrtNumDigits; i++)
         {
             int boxNum = Mathf.FloorToInt(i / sqrtNumDigits) + 1 + i;
             fillBoxWithChecks(boxNum);
@@ -38,9 +38,9 @@ public class sodokuGeneratorScript : MonoBehaviour
     {
         int[] boxContents = newNumSet();
         int index = 0;
-        for(int i = 0; i < sqrtNumDigits; i++)
+        for (int i = 0; i < sqrtNumDigits; i++)
         {
-            for(int j = 0; j < sqrtNumDigits; j++)
+            for (int j = 0; j < sqrtNumDigits; j++)
             {
                 int boxIndex;
                 int indexOffset;
@@ -59,7 +59,7 @@ public class sodokuGeneratorScript : MonoBehaviour
                 index++;
             }
         }
-        
+
     }
 
     private static void fillBoxWithChecks(int boxNum)
@@ -78,7 +78,7 @@ public class sodokuGeneratorScript : MonoBehaviour
 
                 //offset the board index based off box num
                 indexOffset = (boxNum % sqrtNumDigits) * sqrtNumDigits; //Horizontal offset
-                indexOffset += (Mathf.FloorToInt(boxNum/sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
+                indexOffset += (Mathf.FloorToInt(boxNum / sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
 
                 trueIndex = boxIndex + indexOffset;
                 //print(trueIndex);
@@ -98,7 +98,7 @@ public class sodokuGeneratorScript : MonoBehaviour
                 do
                 {
                     int currentNum = boxContents[count];
-                    if(!isInRow(currentNum, row) && !isInCol(currentNum, row) && currentNum != -1) //If the number wanting to be palced is legal
+                    if (!isInRow(currentNum, row) && !isInCol(currentNum, row) && currentNum != -1) //If the number wanting to be palced is legal
                     {
                         board[trueIndex] = currentNum;
                         boxContents[count] = -1;
@@ -107,7 +107,7 @@ public class sodokuGeneratorScript : MonoBehaviour
                     count++;
 
                 } while (!numPlaced && count < numDigits);
-                 
+
 
 
                 //do //Attempt to place a number in a cell
@@ -129,9 +129,9 @@ public class sodokuGeneratorScript : MonoBehaviour
 
     private static bool isInRow(int num, int row)
     {
-        for(int i = 0; i < board.Length; i++) //Loop through the whole board
+        for (int i = 0; i < board.Length; i++) //Loop through the whole board
         {
-            if(Mathf.FloorToInt(i / numDigits) == row && num == board[i])
+            if (Mathf.FloorToInt(i / numDigits) == row && num == board[i])
             {
                 return true;
             }
@@ -179,22 +179,6 @@ public class sodokuGeneratorScript : MonoBehaviour
                 myArray[i] = temp;
             }
         }
-<<<<<<< Updated upstream
-=======
-    }
-
-    //Generate the sodoku
-    public static int[,] getSodoku(int width, int numRemoved)
-    {
-        N = width;
-        K = numRemoved;
-
-        setUp();
-        fillValues();
-        //removeKDigits();
-        printSodoku();
-        return mat;
->>>>>>> Stashed changes
 
         return myArray;
     }
@@ -215,13 +199,10 @@ public class sodokuGeneratorScript : MonoBehaviour
         }
     }
 
-<<<<<<< Updated upstream
     private void Start()
     {
         getSudoku(9, 20);
         printSudoku();
     }
-=======
->>>>>>> Stashed changes
 
 }
