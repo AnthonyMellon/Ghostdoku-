@@ -6,6 +6,7 @@ public class grid : MonoBehaviour
 {
     public int columns = 0;
     public int rows = 0;
+    public int numRemoved = 1;
     public float everySquareOffset = 0.0f;
     public Vector2 startPos = new Vector2(0.0f, 0.0f);
     public GameObject gridSquare;
@@ -71,9 +72,15 @@ public class grid : MonoBehaviour
     }
     private void SetGridNumbers()
     {
-        foreach(var square in gridSquares)
+        int[] gridNums = new int[rows * columns];
+        gridNums = sodokuGeneratorScript.getSodoku1D(columns, numRemoved);
+        print(gridNums.Length);
+
+        for (int j = 0; j < 81; j++)
         {
-            square.GetComponent<gridSquare>().SetNumber(Random.RandomRange(0,10));
+            gridSquares[j].GetComponent<gridSquare>().SetNumber(gridNums[j]);
         }
     }
+
+
 }

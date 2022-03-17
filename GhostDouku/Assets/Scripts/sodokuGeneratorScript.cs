@@ -179,6 +179,22 @@ public class sodokuGeneratorScript : MonoBehaviour
                 myArray[i] = temp;
             }
         }
+<<<<<<< Updated upstream
+=======
+    }
+
+    //Generate the sodoku
+    public static int[,] getSodoku(int width, int numRemoved)
+    {
+        N = width;
+        K = numRemoved;
+
+        setUp();
+        fillValues();
+        //removeKDigits();
+        printSodoku();
+        return mat;
+>>>>>>> Stashed changes
 
         return myArray;
     }
@@ -199,10 +215,13 @@ public class sodokuGeneratorScript : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
     private void Start()
     {
         getSudoku(9, 20);
         printSudoku();
     }
+=======
+>>>>>>> Stashed changes
 
 }
