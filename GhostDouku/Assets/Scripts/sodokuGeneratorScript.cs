@@ -1,137 +1,82 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class sodokuGeneratorScript : MonoBehaviour
 {
-    private static int[] board;
+    private static List<List<int>> board;
+    private static int[] finalBoard;
     private static int numDigits;
     private static int sqrtNumDigits;
+
+
+
+
     public static int[] getSudoku(int numdigits, int numRemoved)
     {
         numDigits = numdigits;
         sqrtNumDigits = (int)Mathf.Sqrt(numDigits);
-        board = new int[numDigits * numDigits];
+        board = new List<List<int>>();        
+        finalBoard = new int[numdigits * numdigits];
 
-        fillSudoku();
-
-        return board;
-    }
-
-    private static void fillSudoku()
-    {
-        //Fill the 3 diagonal boxes
-        for (int i = 0; i < sqrtNumDigits; i++)
+        //Initialise the lists in board
+        for(int i = 0; i < numdigits*numdigits; i++)
         {
-            fillBoxNoChecks(i + i * sqrtNumDigits);
+            List<int> sublist = newNumSet();
+            board.Add(sublist);
         }
 
-        //Fill the remaining boxes
-        for (int i = 0; i < numDigits - sqrtNumDigits; i++)
-        {
-            int boxNum = Mathf.FloorToInt(i / sqrtNumDigits) + 1 + i;
-            fillBoxWithChecks(boxNum);
-        }
+        fillBoard();
+        if (!boardIsValid()) getSudoku(numdigits, numRemoved);
 
-        //Remove X amount of spaces
+
+
+        return finalBoard;
     }
 
-    private static void fillBoxNoChecks(int boxNum)
+    private static void fillBoard()
     {
-        int[] boxContents = newNumSet();
         int index = 0;
-        for (int i = 0; i < sqrtNumDigits; i++)
+        while(index < board.Count)
         {
-            for (int j = 0; j < sqrtNumDigits; j++)
+            if(index < 0)
             {
-                int boxIndex;
-                int indexOffset;
-                int trueIndex;
+                return;
+            }
 
-                //get the board index relative to the box (0 - numdigits)
-                boxIndex = j + i * numDigits;
-
-                //offset the board index based off box num
-                indexOffset = (boxNum % sqrtNumDigits) * sqrtNumDigits; //Horizontal offset
-                indexOffset += (Mathf.FloorToInt(boxNum / sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
-
-                trueIndex = boxIndex + indexOffset;
-
-                board[trueIndex] = boxContents[index];
-                index++;
+            //Are there available numbers for this cell?
+            if (board[index].Count > 0) //Yes, there are available numbers
+            {               
+                if(!numConflicts(index, board[index][0])) //If first available number does not conflict
+                {
+                    finalBoard[index] = board[index][0]; //Use that the first available number
+                    index++; //Advance 1 cell
+                }
+                else //If the first available number does conflict
+                {
+                    board[index].RemoveAt(0); //Remove from availabe numbers for this cell
+                }
+            }
+            else //No, there arent available numbers
+            {
+                board[index] = newNumSet(); //Refresh this cells numbers
+                index--; //Go back 1 cell
             }
         }
 
     }
 
-    private static void fillBoxWithChecks(int boxNum)
+    private static bool numConflicts(int index, int num)
     {
-        int[] boxContents = newNumSet();
-        for (int i = 0; i < sqrtNumDigits; i++)
-        {
-            for (int j = 0; j < sqrtNumDigits; j++)
-            {
-                int boxIndex;
-                int indexOffset;
-                int trueIndex;
-
-                //get the board index relative to the box (0 - numdigits)
-                boxIndex = j + i * numDigits;
-
-                //offset the board index based off box num
-                indexOffset = (boxNum % sqrtNumDigits) * sqrtNumDigits; //Horizontal offset
-                indexOffset += (Mathf.FloorToInt(boxNum / sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
-
-                trueIndex = boxIndex + indexOffset;
-                //print(trueIndex);
-
-                bool numPlaced = false;
-                int row = Mathf.FloorToInt(trueIndex / numDigits);
-                int col = trueIndex % numDigits;
-
-                /* at the true index
-                 * take the first number of the box contents
-                 * check if its already in the row, or col, or is 0
-                 * if no place it
-                 * if yes try next number in box contents
-                 */
-
-                int count = 0;
-                do
-                {
-                    int currentNum = boxContents[count];
-                    if (!isInRow(currentNum, row) && !isInCol(currentNum, row) && currentNum != -1) //If the number wanting to be palced is legal
-                    {
-                        board[trueIndex] = currentNum;
-                        boxContents[count] = -1;
-                        numPlaced = true;
-                    }
-                    count++;
-
-                } while (!numPlaced && count < numDigits);
-
-
-
-                //do //Attempt to place a number in a cell
-                //{
-                //    print(k % 9);
-
-                //    if (boxContents[k%9] != 0 && !isInRow(boxContents[k%9], row) && !isInCol(boxContents[k%9], col))
-                //    {
-                //        board[trueIndex] = boxContents[k];
-                //        boxContents[k] = 0;
-                //        numPlaced = true;
-                //    }
-                //    k++;
-
-                //} while (!numPlaced && k < 100);
-            }
-        }
+        if (isInRow(num, indexToRow(index)) || isInCol(num, indexToCol(index)) || isInBox(num, indexToBox(index))) return true;
+        return false;
     }
 
     private static bool isInRow(int num, int row)
     {
-        for (int i = 0; i < board.Length; i++) //Loop through the whole board
+        for (int i = 0; i < board.Count; i++) //Loop through the whole board
         {
-            if (Mathf.FloorToInt(i / numDigits) == row && num == board[i])
+            if (Mathf.FloorToInt(i / numDigits) == row && num == finalBoard[i])
             {
                 return true;
             }
@@ -142,9 +87,9 @@ public class sodokuGeneratorScript : MonoBehaviour
 
     private static bool isInCol(int num, int col)
     {
-        for (int i = 0; i < board.Length; i++) //Loop through the whole board
+        for (int i = 0; i < board.Count; i++) //Loop through the whole board
         {
-            if (i % numDigits == col && num == board[i])
+            if (i % numDigits == col && num == finalBoard[i])
             {
                 return true;
             }
@@ -153,37 +98,82 @@ public class sodokuGeneratorScript : MonoBehaviour
         return false;
     }
 
-    private static int[] newNumSet()
+    private static bool isInBox(int num, int box)
     {
-        int[] numSet = new int[numDigits];
-        for (int i = 0; i < numDigits; i++)
+        for(int i = 0; i < numDigits; i++)
         {
-            numSet[i] = i + 1;
+            int index = Mathf.FloorToInt(i / sqrtNumDigits);
+            index *= numDigits;
+            index += i % sqrtNumDigits;
+            index += (box % sqrtNumDigits) * sqrtNumDigits; //Horizontal offset
+            index += (Mathf.FloorToInt(box / sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
+
+            if (finalBoard[index] == num)
+            {
+                return true;
+            }
         }
 
-        numSet = shuffleArray(numSet);
+        return false;
+    }
+
+    private static List<int> newNumSet()
+    {
+        List<int> numSet = new List<int>();
+        for (int i = 0; i < numDigits; i++)
+        {
+            numSet.Add(i + 1);
+        }
+
+        numSet = shuffleList(numSet);
 
         return numSet;
     }
 
-    private static int[] shuffleArray(int[] myArray)
+    private static List<int> shuffleList(List<int> myList)
     {
         //Fisher-Yates shuffle
-        for (int i = myArray.Length - 1; i >= 0; i--)
+        for (int i = myList.Count - 1; i >= 0; i--)
         {
             int j = Random.Range(0, i);
             if (j != i)
             {
-                int temp = myArray[j];
-                myArray[j] = myArray[i];
-                myArray[i] = temp;
+                int temp = myList[j];
+                myList[j] = myList[i];
+                myList[i] = temp;
             }
         }
 
-        return myArray;
+        return myList;
     }
 
-    private void printSudoku()
+    private static int indexToRow(int index)
+    {
+        return Mathf.FloorToInt(index / numDigits);
+    }
+
+    private static int indexToCol(int index)
+    {
+        return index % numDigits;
+    }
+
+    private static int indexToBox(int index)
+    {        
+        int boxCol = Mathf.FloorToInt(indexToCol(index) / sqrtNumDigits);
+        int boxRow = Mathf.FloorToInt(indexToRow(index) / sqrtNumDigits) * sqrtNumDigits;
+        return boxCol + boxRow;
+    }
+
+    private static bool boardIsValid()
+    {
+        foreach (int i in finalBoard)
+        {
+            if (i == 0) return false;
+        }
+        return true;
+    }
+
+    private static void printSudoku()
     {
         string currentLine;
         int index = 0;
@@ -192,17 +182,25 @@ public class sodokuGeneratorScript : MonoBehaviour
             currentLine = "";
             for (int j = 0; j < numDigits; j++)
             {
-                currentLine = $"{currentLine}{board[index]}";
+                currentLine = $"{currentLine}{finalBoard[index]}";
                 index++;
             }
             print(currentLine);
         }
     }
 
-    private void Start()
+    public static void testPassRate(int sampleSize)
     {
-        getSudoku(9, 20);
-        printSudoku();
+        int passes = 0;
+        for(int i = 0; i < sampleSize; i++)
+        {
+            getSudoku(9, 20);
+            if (boardIsValid()) passes++;
+        }
+
+        float passPercent = ((float)passes / sampleSize)*100;
+        print($"");
+        print($"Generated {sampleSize} Sudokos\n{passes} of {sampleSize} ({passPercent}%) generated successfuly");        
     }
 
 }

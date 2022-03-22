@@ -72,8 +72,10 @@ public class grid : MonoBehaviour
     }
     private void SetGridNumbers()
     {
+        //sodokuGeneratorScript.testPassRate(1000);
+
         int[] gridNums = new int[rows * columns];
-        gridNums = sodokuGeneratorScript.getSodoku1D(columns, numRemoved);
+        gridNums = sodokuGeneratorScript.getSudoku(columns, numRemoved);
         print(gridNums.Length);
 
         for (int j = 0; j < 81; j++)
