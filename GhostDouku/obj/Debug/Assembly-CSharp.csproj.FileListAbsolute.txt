@@ -1,0 +1,2 @@
+C:\Users\Dhuga\Desktop\Project\ghostdouku\GhostDouku\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\Dhuga\Desktop\Project\ghostdouku\GhostDouku\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
