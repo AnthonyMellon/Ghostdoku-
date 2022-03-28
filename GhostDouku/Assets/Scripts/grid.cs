@@ -6,7 +6,7 @@ public class grid : MonoBehaviour
 {
     public int columns = 0;
     public int rows = 0;
-    public int numRemoved = 1;
+    public int numRemoved = 2;
     public float everySquareOffset = 0.0f;
     public Vector2 startPos = new Vector2(0.0f, 0.0f);
     public GameObject gridSquare;
@@ -75,6 +75,7 @@ public class grid : MonoBehaviour
         //sodokuGeneratorScript.testPassRate(1000);
 
         int[] gridNums = new int[rows * columns];
+        numRemoved = 50;
         gridNums = sodokuGeneratorScript.getSudoku(columns, numRemoved);
         print(gridNums.Length);
 
