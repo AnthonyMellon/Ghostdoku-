@@ -212,9 +212,10 @@ const testPassRate = (sampleSize) => {
     console.log(`Generated ${sampleSize} Sudokus\n${passes} of ${sampleSize} (${passPercent}%) generated successfuly`);
 }
 
-const massSudoku = (nSudokus, replace) => {
+const massSudoku = (nSudokus, nEmptyCells, puzzleFile, replace) => {
 
-    let fileName = 'sudoku-medium.txt';
+    numEmptyCells = nEmptyCells;
+    let fileName = puzzleFile;
     if(replace) {
         fs.writeFile(fileName, '', (e) => {
             if(e) console.log(e);
@@ -237,4 +238,4 @@ const massSudoku = (nSudokus, replace) => {
     console.log(`Average time to make sodoku: ${totalTime / nSudokus}ms`);
 }
 
-massSudoku(10, true);
+massSudoku(10, 40, 'sudoku-medium.txt', true);

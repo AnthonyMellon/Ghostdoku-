@@ -1,9 +1,12 @@
 fs = require('fs');
-puzzleList = 'sudoku-easy.txt';
+puzzleList = process.argv[2];
 
 const readFile = () => {
+
+    if(!process.argv[2]) return console.log('please provide a file');
+
     fs.readFile(puzzleList, 'utf8', (err, data) => {
-        if(err) return err;
+        if(err) return console.log(err);
 
         const cleanData = removeDuplicates(parseData(data)); 
 
@@ -30,6 +33,7 @@ const removeDuplicates = (data) => {
     {
         let start = new Date();
         let duplicate = false;
+
         cleanData.forEach(element => {
             if(data[i].toString() == element.toString()) {                
                 duplicate = true;
@@ -41,7 +45,9 @@ const removeDuplicates = (data) => {
         let end = new Date();
         console.log(`Check sudoku ${i+1}/${data.length-1} in ${end - start}ms`);
     }
-    console.log(`${cleanData.length} unique sudokus`);
+    console.log('------------------');
+    console.log(`${data.length-1} sudokus checked\n${data.length-1 - cleanData.length} duplicates found and removed\n${cleanData.length} sudokus remain`);
+    console.log('------------------');
 
     return cleanData;
 }
