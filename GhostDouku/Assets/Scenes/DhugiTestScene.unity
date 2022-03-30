@@ -311,6 +311,7 @@ MonoBehaviour:
   startPos: {x: -435, y: 442}
   gridSquare: {fileID: 8685418578197676637, guid: a74ce9f4997e8e743bcf820fbba9e685, type: 3}
   squareScale: 0.9
+  sodokuFile: {fileID: 4900000, guid: fd5ca7267b9cfe441b2019ac5cfd7c34, type: 3}
 --- !u!114 &1932906553
 MonoBehaviour:
   m_ObjectHideFlags: 0

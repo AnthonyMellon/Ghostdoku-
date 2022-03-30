@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class sodokuGeneratorScript : MonoBehaviour
 {
@@ -9,8 +10,9 @@ public class sodokuGeneratorScript : MonoBehaviour
     private static int numDigits;
     private static int sqrtNumDigits;
     private static int clearAttempts = 0;
-
-
+/*    private static string sudokuFilePath = "Assets/Sodokus/easy.txt";
+    private static StreamWriter writer = new StreamWriter(sudokuFilePath, true);
+    private static StreamReader reader = new StreamReader(sudokuFilePath);*/
 
     public static int[] getSudoku(int numdigits, int numRemoved)
     {
@@ -32,7 +34,10 @@ public class sodokuGeneratorScript : MonoBehaviour
         {
             clearNCells(numRemoved);            
         }
-        
+
+/*        writer.WriteLine(finalBoard.ToString());
+        writer.Close();*/
+
         return finalBoard;
     }
 
