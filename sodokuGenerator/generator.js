@@ -1,32 +1,37 @@
 fs = require('fs');
 
-let board = [];
+let board;
 let finalBoard;
 let numDigits = 9;
-let numEmptyCells = 20;
+let minEmptyCells = 20;
+let maxEmptyCells = 30;
 let sqrtNumDigits = Math.sqrt(9);
 let clearAttempts = 0;
 const maxClearAttemps = 1000;
 
 const getSudoku = () => {
+
+    board = new Array();
     for(let i = 0; i < numDigits*numDigits; i++)
     {
         board.push(newNumSet());
     }
-
+    
     finalBoard = new Array(numDigits*numDigits).fill(0);
     fillBoard();    
     clearAttempts = 0;
-    if(!boardIsValid()) getSudoku();
-    else clearCells();
+
+     if(!boardIsValid()) getSudoku();
+     else clearCells();
 }
 
 const clearCells = () => {
     let clearedBoard = new Array(numDigits*numDigits).fill(0);
     copyArray(finalBoard, clearedBoard);
     let numRemoved = 0;
+    let numToRemove = Math.random() * (maxEmptyCells - minEmptyCells) + minEmptyCells;
 
-    while (numRemoved < numEmptyCells) //Clear n amount of cells
+    while (numRemoved < numToRemove) //Clear n amount of cells
     {
         //Get a random index thats not already been cleared and set clear it
         let index = 0;
@@ -95,12 +100,14 @@ const fillBoard = () => {
     let index = 0;
     while(index < board.length)
     {
+        //Start
         if(index < 0) return;
 
         //Are there available numbers for this cell?
         if(board[index].length > 0) { //Yes there are available numbers
             if(!numConflicts(index, board[index][0], finalBoard)) { //If the first available number does not conflict
-                finalBoard[index] = board[index][0]; //Use the first available number                
+                finalBoard[index] = board[index][0]; //Use the first available number  
+                board[index].splice(0, 1);              
                 index++; //Move to the next cell
             }
             else { //If the first available number does conflict
@@ -201,20 +208,21 @@ const boardIsValid = () => {
 const testPassRate = (sampleSize) => {
     let passes = 0;
     for(let i = 0; i < sampleSize; i++) {
-        getSudoku(numDigits, numEmptyCells);
+        getSudoku(numDigits, minEmptyCells);
         if(boardIsValid()) {            
-            passes++;    
-            
-        }         
+            passes++;                
+        }     
+        console.log(`${i} of ${sampleSize}`)    
     }
 
     let passPercent = (passes / sampleSize) * 100;
     console.log(`Generated ${sampleSize} Sudokus\n${passes} of ${sampleSize} (${passPercent}%) generated successfuly`);
 }
 
-const massSudoku = (nSudokus, nEmptyCells, puzzleFile, replace) => {
+const massSudoku = (nSudokus, tminEmptyCells, tmaxEmptyCells, puzzleFile, replace) => {
 
-    numEmptyCells = nEmptyCells;
+    minEmptyCells = tminEmptyCells;
+    maxEmptyCells = tmaxEmptyCells;
     let fileName = puzzleFile;
     if(replace) {
         fs.writeFile(fileName, '', (e) => {
@@ -226,16 +234,19 @@ const massSudoku = (nSudokus, nEmptyCells, puzzleFile, replace) => {
     let totalTime = 0;
     for(let i = 0; i < nSudokus; i++) {
         let startTime = new Date();
-        getSudoku(numDigits, numEmptyCells);
-        fs.appendFile(fileName, `${finalBoard.toString()}\n`, (e) => {
+        getSudoku(numDigits, tminEmptyCells);
+        fs.appendFileSync(fileName, `${finalBoard.toString()}\n`, (e) => {
             if(e) console.log(e);
         });
+        
         let endTime = new Date();
         let deltaTime = endTime - startTime;
         totalTime += deltaTime;
         console.log(`Successfuly made sudoku #${i+1} in ${deltaTime}ms`);        
     }
     console.log(`Average time to make sodoku: ${totalTime / nSudokus}ms`);
+    console.log(`Total time spent: ${totalTime / 1000}secs`)
 }
 
-massSudoku(10, 40, 'sudoku-medium.txt', true);
+massSudoku(100000, 30, 40, 'sudoku-medium.txt', true);
+//testPassRate(1000);

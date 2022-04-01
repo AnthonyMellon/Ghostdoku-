@@ -8,6 +8,8 @@ const readFile = () => {
     fs.readFile(puzzleList, 'utf8', (err, data) => {
         if(err) return console.log(err);
 
+        let start = new Date();
+
         const cleanData = removeDuplicates(parseData(data)); 
 
         fs.writeFile(puzzleList, '', (e) => { //blank the file
@@ -15,10 +17,12 @@ const readFile = () => {
         }); 
 
         cleanData.forEach(element => { //Insert the clean data into the file
-            fs.appendFile(puzzleList, `${element.toString()}\n`, (e) => {
+            fs.appendFileSync(puzzleList, `${element.toString()}\n`, (e) => {
                 if(e) console.log(e);
             });  
-        });   
+        }); 
+        
+        console.log(`Total time spent: ${(new Date() - start) / 1000}secs`);
   
     });
 }
@@ -42,8 +46,8 @@ const removeDuplicates = (data) => {
 
         if(!duplicate) cleanData.push(data[i])
 
-        let end = new Date();
-        console.log(`Check sudoku ${i+1}/${data.length-1} in ${end - start}ms`);
+        let end = new Date();        
+        console.log(`Check sudoku ${i+1}/${data.length-1} in ${end - start}ms | duplicate: ${duplicate}`);
     }
     console.log('------------------');
     console.log(`${data.length-1} sudokus checked\n${data.length-1 - cleanData.length} duplicates found and removed\n${cleanData.length} sudokus remain`);
