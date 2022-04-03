@@ -6,6 +6,11 @@ public class PanZoom : MonoBehaviour {
     Vector3 touchStart;
     public float zoomOutMin = 1;
     public float zoomOutMax = 8;
+    public float leftLimit;
+    public float rightLimit;
+    public float bottomLimit;
+    public float topLimit;
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,9 +36,29 @@ public class PanZoom : MonoBehaviour {
             Camera.main.transform.position += direction;
         }
         zoom(Input.GetAxis("Mouse ScrollWheel"));
+
+        transform.position = new Vector3
+        (
+            Mathf.Clamp(transform.position.x, leftLimit, rightLimit),
+            Mathf.Clamp(transform.position.y, bottomLimit, topLimit),
+            transform.position.z
+        );
 	}
 
     void zoom(float increment){
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
+    }
+    //Developer Helper to get the correct placement of camera bounds
+    void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        //top boundry line
+        Gizmos.DrawLine(new Vector2(leftLimit, topLimit), new Vector2(rightLimit, topLimit));
+        //right boundry line
+        Gizmos.DrawLine(new Vector2(rightLimit, topLimit), new Vector2(rightLimit, bottomLimit));
+        //bottom boundry line
+        Gizmos.DrawLine(new Vector2(rightLimit, bottomLimit), new Vector2(leftLimit, bottomLimit));
+        //left boundry line
+        Gizmos.DrawLine(new Vector2(leftLimit, bottomLimit), new Vector2(leftLimit, topLimit));
+        
     }
 }
