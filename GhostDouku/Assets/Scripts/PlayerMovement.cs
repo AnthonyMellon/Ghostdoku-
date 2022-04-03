@@ -7,21 +7,19 @@ public class PlayerMovement : MonoBehaviour {
 
     public Rigidbody2D rb;
 
-    Vector2 movement;
+    private Vector3 target;
+
+    void Start() {
+        target = transform.position;
+    }
 
     // Update is called once per frame
     void Update() {
-        MovementInput();
-    }
-
-    private void FixedUpdate() {
-        rb.velocity = movement * moveSpeed;
-    }
-
-    void MovementInput () {
-        float mx = Input.GetAxisRaw("Horizontal");
-        float my = Input.GetAxisRaw("Vertical");
-
-        movement = new Vector2(mx, my).normalized;
+        if(Input.GetMouseButtonDown(0))
+        {
+            target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            target.z = transform.position.z;
+        }
+        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
     }
 }
