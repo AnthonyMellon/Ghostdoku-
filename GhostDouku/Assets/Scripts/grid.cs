@@ -11,6 +11,14 @@ public class grid : MonoBehaviour
     public Vector2 startPos = new Vector2(0.0f, 0.0f);
     public GameObject gridSquare;
     public float squareScale = 1.0f;
+    [Range(0, 100)]
+    public int currentSudoku = 0;
+    [Range(1, 3)]
+    public int difficulty = 1;
+
+    public TextAsset easySudokus;
+    public TextAsset medSudokus;
+    public TextAsset hardSudokus;
 
     private List<GameObject> gridSquares = new List<GameObject>();
     // Start is called before the first frame update
@@ -25,7 +33,11 @@ public class grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SetGridNumbers();
+        }
+
     }
 
     private void CreateGrid()
@@ -37,7 +49,7 @@ public class grid : MonoBehaviour
     private void SpawnGridSquares()
     {
         int square_index = 0;
-        for(int row = 0; row < rows; row++)
+        for (int row = 0; row < rows; row++)
         {
             for (int column = 0; column < columns; column++)
             {
@@ -78,16 +90,39 @@ public class grid : MonoBehaviour
     {
         //sodokuGeneratorScript.testPassRate(1000);
 
-        int[] gridNums = new int[rows * columns];
+
         numRemoved = 1;
-     
-        gridNums = sodokuGeneratorScript.getSudoku(columns, numRemoved);        
+
+        //gridNums = easySudokus.ToString().Split('\n')[currentSudoku].Split(',');
+
+        string[] sudokuAsStrings = hardSudokus.ToString().Split('\n')[currentSudoku].Split(',');
+        if (difficulty == 1)
+        {
+            sudokuAsStrings = easySudokus.ToString().Split('\n')[currentSudoku].Split(',');
+        }
+        else if (difficulty == 2)
+        {
+            sudokuAsStrings = medSudokus.ToString().Split('\n')[currentSudoku].Split(',');
+        }
+        else
+        {
+            sudokuAsStrings = hardSudokus.ToString().Split('\n')[currentSudoku].Split(',');
+        }
+        int[] gridNums = new int[sudokuAsStrings.Length];
+        for (int i = 0; i < sudokuAsStrings.Length; i++)
+        {
+            gridNums[i] = System.Convert.ToInt16(sudokuAsStrings[i]);
+        }
+
+        //gridNums = sodokuGeneratorScript.getSudoku(columns, numRemoved);        
 
         for (int j = 0; j < 81; j++)
         {
             gridSquares[j].GetComponent<gridSquare>().SetNumber(gridNums[j]);
         }
     }
+
+
 
 
 }
