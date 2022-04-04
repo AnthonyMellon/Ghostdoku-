@@ -1,23 +1,25 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class sodokuGeneratorScript : MonoBehaviour
 {
     private static List<List<int>> board;
-    private static int[] finalBoard;
+    private static int[] finalBoard;    
     private static int numDigits;
     private static int sqrtNumDigits;
-
-
-
+    private static int clearAttempts = 0;
+/*    private static string sudokuFilePath = "Assets/Sodokus/easy.txt";
+    private static StreamWriter writer = new StreamWriter(sudokuFilePath, true);
+    private static StreamReader reader = new StreamReader(sudokuFilePath);*/
 
     public static int[] getSudoku(int numdigits, int numRemoved)
     {
         numDigits = numdigits;
         sqrtNumDigits = (int)Mathf.Sqrt(numDigits);
         board = new List<List<int>>();        
-        finalBoard = new int[numdigits * numdigits];
+        finalBoard = new int[numdigits * numdigits];        
 
         //Initialise the lists in board
         for(int i = 0; i < numdigits*numdigits; i++)
@@ -28,10 +30,111 @@ public class sodokuGeneratorScript : MonoBehaviour
 
         fillBoard();
         if (!boardIsValid()) getSudoku(numdigits, numRemoved);
+        else
+        {
+            clearNCells(numRemoved);            
+        }
 
-
+/*        writer.WriteLine(finalBoard.ToString());
+        writer.Close();*/
 
         return finalBoard;
+    }
+
+    private static void copyArray(int[] from, int[] to)
+    {
+        for(int i = 0; i < from.Length; i++)
+        {
+            to[i] = from[i];
+        }
+    }
+
+    public static void clearNCells(int numToRemove)
+    {
+        int[] clearedBoard = new int[numDigits * numDigits];
+        //print($"clearing {numToRemove} cells");
+        copyArray(finalBoard, clearedBoard);
+        int numRemoved = 0;
+        while (numRemoved < numToRemove)
+        {
+            //print($"Removed {numRemoved} / {numToRemove}");
+
+            int index;//Get a random index that hasnt already been cleared
+            do
+            {
+                index = Random.Range(0, clearedBoard.Length);
+            } while (clearedBoard[index] == 0);
+
+            //print($"Clearing at Index{index}");
+            clearedBoard[index] = 0;
+            numRemoved++;
+        }
+        if (isSolvable(clearedBoard))
+        {
+            print($"Made a solvable puzzle with {numToRemove} empty spaces after {clearAttempts} attempts");
+            copyArray(clearedBoard, finalBoard);
+        }
+        else
+        {
+            clearAttempts++;
+
+            if (clearAttempts >= 1000)
+            {
+                print($"Could not make a solvable puzzle with with {numToRemove} empty spaces after {clearAttempts} attemps");
+            }
+            else
+            {
+                clearNCells(numToRemove);
+            }
+        }
+    }
+    
+    public static bool isSolvable(int[] board)
+    {
+        int[] testBoard = new int[board.Length];
+        copyArray(board, testBoard);
+
+        List<int> emptyCells = new List<int>();
+
+        //Find all the empty cells indexes       
+        for(int i = 0; i < testBoard.Length; i++)
+        {
+            if (testBoard[i] == 0) emptyCells.Add(i);
+        }
+
+        int emptyCellIndex = 0; //The current cell being looked at
+        bool solvable = true;
+        do
+        {
+            //Find the possible numbers to fill the cell
+            List<int> possibleNums = new List<int>();
+            for(int i = 1; i <= numDigits; i++)
+            {
+                if (!numConflicts(emptyCells[emptyCellIndex], i, testBoard)) possibleNums.Add(i);
+            }
+
+            //If theres only 1 possible number to fill this cell
+            if(possibleNums.Count == 1)
+            {
+                testBoard[emptyCells[emptyCellIndex]] = possibleNums[0]; //Insert number into cell
+                emptyCells.RemoveAt(emptyCellIndex); //Remove the index from empty cells list
+                emptyCellIndex = 0; //Start the loop over
+            }
+
+            //If theres more than 1 possible number to fill this cell
+            else
+            {
+                //If this is the last empty cell
+                if(emptyCellIndex == emptyCells.Count - 1) solvable = false; //Puzzle is not solvable
+
+                //If this is not the last empty cell
+                else emptyCellIndex++; //Move to next cell
+
+            }
+
+        } while (solvable && emptyCells.Count > 0);
+
+        return solvable;
     }
 
     private static void fillBoard()
@@ -47,7 +150,7 @@ public class sodokuGeneratorScript : MonoBehaviour
             //Are there available numbers for this cell?
             if (board[index].Count > 0) //Yes, there are available numbers
             {               
-                if(!numConflicts(index, board[index][0])) //If first available number does not conflict
+                if(!numConflicts(index, board[index][0], finalBoard)) //If first available number does not conflict
                 {
                     finalBoard[index] = board[index][0]; //Use that the first available number
                     index++; //Advance 1 cell
@@ -66,17 +169,17 @@ public class sodokuGeneratorScript : MonoBehaviour
 
     }
 
-    private static bool numConflicts(int index, int num)
+    private static bool numConflicts(int index, int num, int[] checkBoard)
     {
-        if (isInRow(num, indexToRow(index)) || isInCol(num, indexToCol(index)) || isInBox(num, indexToBox(index))) return true;
+        if (isInRow(num, indexToRow(index), checkBoard) || isInCol(num, indexToCol(index), checkBoard) || isInBox(num, indexToBox(index), checkBoard)) return true;
         return false;
     }
 
-    private static bool isInRow(int num, int row)
+    private static bool isInRow(int num, int row, int[] checkBoard)
     {
         for (int i = 0; i < board.Count; i++) //Loop through the whole board
         {
-            if (Mathf.FloorToInt(i / numDigits) == row && num == finalBoard[i])
+            if (Mathf.FloorToInt(i / numDigits) == row && num == checkBoard[i])
             {
                 return true;
             }
@@ -85,11 +188,11 @@ public class sodokuGeneratorScript : MonoBehaviour
         return false;
     }
 
-    private static bool isInCol(int num, int col)
+    private static bool isInCol(int num, int col, int[] checkBoard)
     {
         for (int i = 0; i < board.Count; i++) //Loop through the whole board
         {
-            if (i % numDigits == col && num == finalBoard[i])
+            if (i % numDigits == col && num == checkBoard[i])
             {
                 return true;
             }
@@ -98,7 +201,7 @@ public class sodokuGeneratorScript : MonoBehaviour
         return false;
     }
 
-    private static bool isInBox(int num, int box)
+    private static bool isInBox(int num, int box, int[] checkBoard)
     {
         for(int i = 0; i < numDigits; i++)
         {
@@ -108,7 +211,7 @@ public class sodokuGeneratorScript : MonoBehaviour
             index += (box % sqrtNumDigits) * sqrtNumDigits; //Horizontal offset
             index += (Mathf.FloorToInt(box / sqrtNumDigits)) * (numDigits * sqrtNumDigits); //Vertical offset
 
-            if (finalBoard[index] == num)
+            if (checkBoard[index] == num)
             {
                 return true;
             }
@@ -204,3 +307,5 @@ public class sodokuGeneratorScript : MonoBehaviour
     }
 
 }
+
+
