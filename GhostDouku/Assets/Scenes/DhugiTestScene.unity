@@ -1235,7 +1235,7 @@ MonoBehaviour:
   startPos: {x: -425, y: -425}
   gridSquare: {fileID: 8685418578197676637, guid: a74ce9f4997e8e743bcf820fbba9e685, type: 3}
   squareScale: 0.9
-  currentSudoku: 0
+  currentSudoku: 100
   difficulty: 1
   easySudokus: {fileID: 4900000, guid: 6d6487e845444304dab829ed9934bce7, type: 3}
   medSudokus: {fileID: 4900000, guid: c3ad95be7a0ae8c49979a17a3017a227, type: 3}

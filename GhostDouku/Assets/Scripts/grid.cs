@@ -92,7 +92,7 @@ public class grid : MonoBehaviour
 
 
         numRemoved = 1;
-
+        currentSudoku = Random.Range(0, 100);
         //gridNums = easySudokus.ToString().Split('\n')[currentSudoku].Split(',');
 
         string[] sudokuAsStrings = hardSudokus.ToString().Split('\n')[currentSudoku].Split(',');
@@ -119,6 +119,10 @@ public class grid : MonoBehaviour
         for (int j = 0; j < 81; j++)
         {
             gridSquares[j].GetComponent<gridSquare>().SetNumber(gridNums[j]);
+            if(gridNums[j] != 0)
+            {
+                gridSquares[j].GetComponent<gridSquare>().SetHasDefaultValue(true);
+            }
         }
     }
 
