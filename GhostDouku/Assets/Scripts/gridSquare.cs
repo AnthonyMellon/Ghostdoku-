@@ -13,6 +13,16 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
     private bool selected_ = false;
     private int square_index_ = -1;
+    private bool has_default_value_ = false;
+
+    public void SetHasDefaultValue(bool has_default)
+    {
+        has_default_value_ = has_default;
+    }
+    public bool GetHasDefaultValue()
+    {
+        return has_default_value_;
+    }
     public bool IsSelected() { return selected_; }
     public void setSquareIndex(int index)
     {
@@ -27,21 +37,23 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         if (number_ <= 0)
         {
             number_text.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-            gridBox.GetComponent<gridSquare>().interactable = true;
         }
 
         else
         {
             number_text.GetComponent<TMPro.TextMeshProUGUI>().text = number_.ToString();
-            gridBox.GetComponent<gridSquare>().interactable = false;
         }
 
 
     }
     public void SetNumber(int number)
     {
-        number_ = number;
-        DisplayText();
+        if(has_default_value_ == false)
+        {
+            number_ = number;
+            DisplayText();
+        }
+           
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -64,7 +76,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     public void OnSetNumber(int number)
     {
-        if(selected_)
+        if (selected_)
         {
             SetNumber(number);
         }
