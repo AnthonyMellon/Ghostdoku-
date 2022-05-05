@@ -48,6 +48,7 @@ public class grid : MonoBehaviour
 
     private void SpawnGridSquares()
     {
+        print(sudokuUtils.board.Length);
         int square_index = 0;
         for (int row = 0; row < rows; row++)
         {

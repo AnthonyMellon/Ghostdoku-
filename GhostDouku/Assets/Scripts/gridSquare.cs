@@ -50,8 +50,14 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         if(has_default_value_ == false)
         {
+            //Update the array representing the sudoku board
+            sudokuUtils.board[square_index_] = number;
+
             number_ = number;
             DisplayText();
+
+            //Check if the sudoku has been solved
+            print($"Board is solved: {sudokuUtils.isSolved()}");
         }
            
     }
