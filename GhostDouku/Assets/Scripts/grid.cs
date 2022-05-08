@@ -15,7 +15,7 @@ public class grid : MonoBehaviour
     [Range(0, 100)]
     public int currentSudoku = 0;
     [Range(1, 3)]
-    public int difficulty = 1;
+    public int difficulty = 3;
 
     public TextAsset easySudokus;
     public TextAsset medSudokus;
@@ -97,14 +97,17 @@ public class grid : MonoBehaviour
         if (difficulty == 1)
         {
             sudokuAsStrings = easySudokus.ToString().Split('\n')[currentSudoku].Split(',');
+            print("This is easy");
         }
         else if (difficulty == 2)
         {
             sudokuAsStrings = medSudokus.ToString().Split('\n')[currentSudoku].Split(',');
+            print("This is medium");
         }
         else
         {
             sudokuAsStrings = hardSudokus.ToString().Split('\n')[currentSudoku].Split(',');
+            print("This is hard");
         }
         int[] gridNums = new int[sudokuAsStrings.Length];
         for (int i = 0; i < sudokuAsStrings.Length; i++)

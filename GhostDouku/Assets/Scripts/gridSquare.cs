@@ -13,7 +13,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
     private bool selected_ = false;
     private int square_index_ = -1;
-    private bool has_default_value_ = false;
+    public bool has_default_value_ = false;
 
     public void SetHasDefaultValue(bool has_default)
     {
@@ -88,48 +88,62 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
     }
     public void OnSquareSelected(int sqaure_index)
-    {
-        
-        Image image = gridBox.transform.Find("Image").GetComponent<Image>(); //The image component of the selected cell
-        int myRow = sudokuUtils.getRow(sqaure_index); //The row of the selected cell
-        int myCol = sudokuUtils.getCol(sqaure_index); //The col of the selected cell
-
+    {       
         //If this is not the selected cell
         if (square_index_ != sqaure_index)
         {
-            if(myRow == sudokuUtils.getRow(square_index_) || myCol == sudokuUtils.getCol(square_index_)) //If this cell is in the same row or col as the selected cell
-            {
-                //If there is a default value for this cell
-                if(has_default_value_)
-                {
-                    image.color = new Color(0.8f, 0.8f, 0f); //Dark-Yellow    
-                }
-                else
-                {
-                    image.color = new Color(1f, 1f, 0f); //Yellow    
-                }
-            
-            }
-            else
-            {
-                //If there is a default value for this cell
-                if(has_default_value_)
-                {
-                    image.color = new Color(0.8f, 0.8f, 0.8f); //Gray
-                }
-                else
-                {
-                    image.color = new Color(1f, 1f, 1f); //White
-                }
-                
-            }
-            
             selected_ = false;
-        } 
+        }
+
+        cellColours(sqaure_index);      
+    }
+
+    private void cellColours(int squareIndex)
+    {
+        Image image = gridBox.transform.Find("Image").GetComponent<Image>(); //The image component of the selected cell
+        int myRow = sudokuUtils.getRow(squareIndex); //The row of the selected cell
+        int myCol = sudokuUtils.getCol(squareIndex); //The col of the selected cell
+
+        bool defaultCell = transform.parent.Find($"Cell {squareIndex}").GetComponent<gridSquare>().has_default_value_;
+
+        //Blank all the cells colors
+        if (has_default_value_)
+        {
+            image.color = new Color(0.8f, 0.8f, 0.8f); //Gray
+        }
+        else
+        {
+            image.color = new Color(1f, 1f, 1f); //White
+        }
+
+        //If this is not the selected cell
+        if (square_index_ != squareIndex)
+        {
+            if (!defaultCell)
+            {
+                if (myRow == sudokuUtils.getRow(square_index_) || myCol == sudokuUtils.getCol(square_index_)) //If this cell is in the same row or col as the selected cell
+                {
+                    //If there is a default value for this cell
+                    if (has_default_value_)
+                    {
+                        image.color = new Color(0.8f, 0.8f, 0f); //Dark-Yellow    
+                    }
+                    else
+                    {
+                        image.color = new Color(1f, 1f, 0f); //Yellow    
+                    }
+
+                }
+            }
+        }
+
         //If this is the selected cell
         else
         {
-            image.color = new Color(1f, 1f, 0.5f);//Pale-Yellow
+            if (!defaultCell)
+            {
+                image.color = new Color(1f, 1f, 0.5f);//Pale-Yellow
+            }
         }
     }
 }
