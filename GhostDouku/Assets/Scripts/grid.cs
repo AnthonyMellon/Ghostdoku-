@@ -58,6 +58,7 @@ public class grid : MonoBehaviour
                 gridSquares[gridSquares.Count - 1].GetComponent<gridSquare>().setSquareIndex(square_index);
                 gridSquares[gridSquares.Count - 1].transform.parent = this.transform;
                 gridSquares[gridSquares.Count - 1].transform.localScale = new Vector3(squareScale, squareScale, squareScale);
+                gridSquares[gridSquares.Count - 1].transform.name = $"Cell {square_index}";                
                 square_index++;
             }
 

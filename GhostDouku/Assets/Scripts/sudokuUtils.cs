@@ -50,19 +50,19 @@ public class sudokuUtils : MonoBehaviour
     }
 
     //Return the row a given index is in
-    private static int getRow(int index)
+    public static int getRow(int index)
     {
         return Mathf.FloorToInt(index / sqrtBoardLength);
     }
 
     //Return the column a given index is in
-    private static int getCol(int index)
+    public static int getCol(int index)
     {
         return index % sqrtBoardLength;
     }
 
     //Return the box a given index is in
-    private static int getBox(int index)
+    public static int getBox(int index)
     {
         int boxCol = Mathf.FloorToInt(getCol(index) / Mathf.Sqrt(sqrtBoardLength));
         int boxRow = Mathf.FloorToInt(getRow(index) / Mathf.Sqrt(sqrtBoardLength) * sqrtBoardLength);
