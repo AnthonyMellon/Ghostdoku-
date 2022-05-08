@@ -99,11 +99,29 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         {
             if(myRow == sudokuUtils.getRow(square_index_) || myCol == sudokuUtils.getCol(square_index_)) //If this cell is in the same row or col as the selected cell
             {
-                image.color = new Color(1f, 1f, 0f); //Yellow
+                //If there is a default value for this cell
+                if(has_default_value_)
+                {
+                    image.color = new Color(0.8f, 0.8f, 0f); //Dark-Yellow    
+                }
+                else
+                {
+                    image.color = new Color(1f, 1f, 0f); //Yellow    
+                }
+            
             }
             else
             {
-                image.color = new Color(1f, 1f, 1f); //White
+                //If there is a default value for this cell
+                if(has_default_value_)
+                {
+                    image.color = new Color(0.8f, 0.8f, 0.8f); //Gray
+                }
+                else
+                {
+                    image.color = new Color(1f, 1f, 1f); //White
+                }
+                
             }
             
             selected_ = false;
@@ -111,7 +129,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         //If this is the selected cell
         else
         {
-            image.color = new Color(1f, 1f, 0.5f);//Gray
+            image.color = new Color(1f, 1f, 0.5f);//Pale-Yellow
         }
     }
 }
