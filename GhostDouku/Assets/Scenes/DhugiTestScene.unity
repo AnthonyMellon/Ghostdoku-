@@ -234,7 +234,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -180, y: 600}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 360, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &164418313
 MonoBehaviour:
@@ -270,7 +270,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c58a8525cc23c5478df5ff51137c8ac, type: 3}
-    m_FontSize: 33
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2030,10 +2030,10 @@ MonoBehaviour:
   columns: 9
   rows: 9
   numRemoved: 0
-  everySquareOffset: 20
+  everySquareOffset: 16
   startPos: {x: -375, y: -195}
   gridSquare: {fileID: 8685418578197676637, guid: a74ce9f4997e8e743bcf820fbba9e685, type: 3}
-  squareScale: 0.9
+  squareScale: 1
   currentSudoku: 100
   difficulty: 1
   easySudokus: {fileID: 4900000, guid: 6d6487e845444304dab829ed9934bce7, type: 3}
