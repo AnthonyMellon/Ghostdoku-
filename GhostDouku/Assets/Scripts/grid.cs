@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
+using UnityEngine.UI;
+
 public class grid : MonoBehaviour
 {
     public int columns = 0;
@@ -14,7 +15,7 @@ public class grid : MonoBehaviour
     [Range(0, 100)]
     public int currentSudoku = 0;
     [Range(1, 3)]
-    public int difficulty = 1;
+    public int difficulty = 3;
 
     public TextAsset easySudokus;
     public TextAsset medSudokus;
@@ -48,6 +49,7 @@ public class grid : MonoBehaviour
 
     private void SpawnGridSquares()
     {
+        print(sudokuUtils.board.Length);
         int square_index = 0;
         for (int row = 0; row < rows; row++)
         {
@@ -57,6 +59,7 @@ public class grid : MonoBehaviour
                 gridSquares[gridSquares.Count - 1].GetComponent<gridSquare>().setSquareIndex(square_index);
                 gridSquares[gridSquares.Count - 1].transform.parent = this.transform;
                 gridSquares[gridSquares.Count - 1].transform.localScale = new Vector3(squareScale, squareScale, squareScale);
+                gridSquares[gridSquares.Count - 1].transform.name = $"Cell {square_index}";                
                 square_index++;
             }
 
@@ -88,14 +91,9 @@ public class grid : MonoBehaviour
     }
     private void SetGridNumbers()
     {
-        //sodokuGeneratorScript.testPassRate(1000);
-
-
-        numRemoved = 1;
         currentSudoku = Random.Range(0, 100);
-        //gridNums = easySudokus.ToString().Split('\n')[currentSudoku].Split(',');
 
-        string[] sudokuAsStrings = hardSudokus.ToString().Split('\n')[currentSudoku].Split(',');
+        string[] sudokuAsStrings;
         if (difficulty == 1)
         {
             sudokuAsStrings = easySudokus.ToString().Split('\n')[currentSudoku].Split(',');
@@ -122,6 +120,7 @@ public class grid : MonoBehaviour
             if(gridNums[j] != 0)
             {
                 gridSquares[j].GetComponent<gridSquare>().SetHasDefaultValue(true);
+                gridSquares[j].transform.Find("Image").GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f); //Set the color to gray
             }
         }
     }
