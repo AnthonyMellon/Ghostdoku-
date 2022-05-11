@@ -1,4 +1,3 @@
-repository "GhostDouku@Ghostdoku@cloud"
+rep "GhostDouku@Ghostdoku@cloud"
   path "/"
-    smartbranch "/main"                  
-     
+    smartbranch "/main"    

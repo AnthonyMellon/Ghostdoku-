@@ -57,7 +57,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             DisplayText();
 
             //Check if the sudoku has been solved
-            //print($"Board is solved: {sudokuUtils.isSolved()}");
+            print($"Board is solved: {sudokuUtils.isSolved()}");
         }
            
     }
