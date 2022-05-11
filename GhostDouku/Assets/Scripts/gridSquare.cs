@@ -36,12 +36,12 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     {
         if (number_ <= 0)
         {
-            number_text.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            number_text.GetComponent<Text>().text = "";
         }
 
         else
         {
-            number_text.GetComponent<TMPro.TextMeshProUGUI>().text = number_.ToString();
+            number_text.GetComponent<Text>().text = number_.ToString();
         }
 
 
