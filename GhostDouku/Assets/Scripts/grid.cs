@@ -17,6 +17,11 @@ public class grid : MonoBehaviour
     [Range(1, 3)]
     public int difficulty = 3;
 
+    [Range(0, 150)]
+    public int smallOffset;
+    [Range(0, 150)]
+    public int bigOffset;
+
     public TextAsset easySudokus;
     public TextAsset medSudokus;
     public TextAsset hardSudokus;
@@ -39,6 +44,8 @@ public class grid : MonoBehaviour
             SetGridNumbers();
         }
 
+        SetSquarePos();
+
     }
 
     private void CreateGrid()
@@ -59,7 +66,7 @@ public class grid : MonoBehaviour
                 gridSquares[gridSquares.Count - 1].GetComponent<gridSquare>().setSquareIndex(square_index);
                 gridSquares[gridSquares.Count - 1].transform.parent = this.transform;
                 gridSquares[gridSquares.Count - 1].transform.localScale = new Vector3(squareScale, squareScale, squareScale);
-                gridSquares[gridSquares.Count - 1].transform.name = $"Cell {square_index}";                
+                gridSquares[gridSquares.Count - 1].transform.name = $"Cell {square_index}";
                 square_index++;
             }
 
@@ -73,20 +80,20 @@ public class grid : MonoBehaviour
         offset.x = squareRect.rect.width * squareRect.transform.localScale.x + everySquareOffset;
         offset.y = squareRect.rect.height * squareRect.transform.localScale.y + everySquareOffset;
 
+
+
         int columnNum = 0;
         int rowNum = 0;
+        int index = 0;
         foreach (GameObject square in gridSquares)
         {
-            if (columnNum + 1 > columns)
-            {
-                rowNum++;
-                columnNum = 0;
-            }
-            var posXOffset = offset.x * columnNum;
-            var posYOffset = offset.y * rowNum;
+            int myRow = sudokuUtils.getRow(index);
+            int boxRow = Mathf.FloorToInt(myRow / 3);
+            int myCol = sudokuUtils.getCol(index);
+            int boxCol = Mathf.FloorToInt(myCol / 3);
 
-            square.GetComponent<RectTransform>().anchoredPosition = new Vector3(startPos.x + posXOffset, startPos.y + posYOffset);
-            columnNum++;
+            square.GetComponent<RectTransform>().anchoredPosition = new Vector3(startPos.x + (myCol*smallOffset) + (boxCol*bigOffset), startPos.y + (myRow*smallOffset) + (boxRow*bigOffset));
+            index++;
         }
     }
     private void SetGridNumbers()
@@ -120,7 +127,7 @@ public class grid : MonoBehaviour
             if(gridNums[j] != 0)
             {
                 gridSquares[j].GetComponent<gridSquare>().SetHasDefaultValue(true);
-                gridSquares[j].transform.Find("Image").GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f); //Set the color to gray
+                gridSquares[j].transform.Find("Image").GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 0.5f); //Set the color to gray
             }
         }
     }
