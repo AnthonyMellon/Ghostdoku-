@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 
 {
+    Image image;
+    Text text;
     public GameObject number_text;
     private int number_ = 0;
     public GameObject gridBox;
@@ -30,7 +32,19 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     public void Start()
     {
+        image = gridBox.transform.Find("Image").GetComponent<Image>(); //The image component of the selected cell
+        text = gridBox.transform.Find("Text").GetComponent<Text>();
         selected_ = false;
+        if (has_default_value_)
+        {
+            image.color = new Color(0.35f, 0.35f, 0.35f, 1f); //Gray
+            text.color = new Color(0.1f, 0.1f, 0.1f, 1f);
+        }
+        else
+        {
+            image.color = new Color(1f, 1f, 1f, 0.0f); //White
+            text.color = new Color(0.46f, 0.78f, 0.73f, 1f);
+        }
     }
     public void DisplayText()
     {
@@ -100,7 +114,6 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
     private void cellColours(int squareIndex)
     {
-        Image image = gridBox.transform.Find("Image").GetComponent<Image>(); //The image component of the selected cell
         int myRow = sudokuUtils.getRow(squareIndex); //The row of the selected cell
         int myCol = sudokuUtils.getCol(squareIndex); //The col of the selected cell
 
@@ -109,11 +122,13 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         //Blank all the cells colors
         if (has_default_value_)
         {
-            image.color = new Color(0.8f, 0.8f, 0.8f, 0.5f); //Gray
+            image.color = new Color(0.35f, 0.35f, 0.35f, 1f); //Gray
+            text.color = new Color(0.1f, 0.1f, 0.1f, 1f);
         }
         else
         {
             image.color = new Color(1f, 1f, 1f, 0.0f); //White
+            text.color = new Color(0.46f, 0.78f, 0.73f, 1f);
         }
 
         //If this is not the selected cell
