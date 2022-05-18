@@ -1,0 +1,3 @@
+rep "GhostDouku@Ghostdoku@cloud"
+  path "/"
+    smartbranch "/main"    
