@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPointerUpHandler, IPointerExitHandler
 
 {
@@ -58,6 +59,10 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
             //Check if the sudoku has been solved
             print($"Board is solved: {sudokuUtils.isSolved()}");
+            if(sudokuUtils.isSolved())
+            {
+                SceneManager.LoadScene("Hub");
+            }
         }
            
     }
