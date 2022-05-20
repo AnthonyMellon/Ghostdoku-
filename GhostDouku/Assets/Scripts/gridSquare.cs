@@ -146,11 +146,11 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
                     //If there is a default value for this cell
                     if (has_default_value_)
                     {
-                        image.color = new Color(0.8f, 0.8f, 0f, 0.5f); //Dark-Yellow    
+                        image.color = new Color(0.6f, 0.9f, 0.8f, 0.5f); //Dark-Yellow    
                     }
                     else
                     {
-                        image.color = new Color(1f, 1f, 0f, 0.5f); //Yellow    
+                        image.color = new Color(0.46f, 0.78f, 0.73f, 0.5f); //Yellow    
                     }
 
                 }
@@ -162,7 +162,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         {
             if (!defaultCell)
             {
-                image.color = new Color(1f, 1f, 0.5f, 0.5f);//Pale-Yellow
+                image.color = new Color(0.4f, 0.8f, 0.5f, 0.5f);//Pale-Yellow
             }
         }
     }
