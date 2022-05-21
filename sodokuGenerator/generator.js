@@ -248,5 +248,5 @@ const massSudoku = (nSudokus, tminEmptyCells, tmaxEmptyCells, puzzleFile, replac
     console.log(`Total time spent: ${totalTime / 1000}secs`)
 }
 
-massSudoku(100, 20, 30, 'sudoku-easy.txt', true);
+massSudoku(1, 3, 3, 'sudoku-veryEasy.txt', true);
 //testPassRate(1000);
