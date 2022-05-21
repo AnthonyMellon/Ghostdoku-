@@ -14,8 +14,8 @@ public class grid : MonoBehaviour
     public float squareScale = 1.0f;
     [Range(0, 100)]
     public int currentSudoku = 0;
-    [Range(1, 3)]
-    public int difficulty = 3;
+    [Range(1, 4)]
+    public int difficulty = 4;
 
     [Range(0, 150)]
     public int smallOffset;
@@ -26,6 +26,7 @@ public class grid : MonoBehaviour
     public TextAsset medSudokus;
     public TextAsset hardSudokus;
 
+    public TextAsset veryEasy;
     private List<GameObject> gridSquares = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
@@ -99,7 +100,7 @@ public class grid : MonoBehaviour
     private void SetGridNumbers()
     {
         currentSudoku = Random.Range(0, 100);
-
+        currentSudoku = 0;
         string[] sudokuAsStrings;
         if (difficulty == 1)
         {
@@ -109,9 +110,13 @@ public class grid : MonoBehaviour
         {
             sudokuAsStrings = medSudokus.ToString().Split('\n')[currentSudoku].Split(',');
         }
-        else
+        else if (difficulty == 3)
         {
             sudokuAsStrings = hardSudokus.ToString().Split('\n')[currentSudoku].Split(',');
+        }
+        else
+        {
+            sudokuAsStrings = veryEasy.ToString().Split('\n')[currentSudoku].Split(',');
         }
         int[] gridNums = new int[sudokuAsStrings.Length];
         for (int i = 0; i < sudokuAsStrings.Length; i++)
