@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 1812725651422166105}
   - component: {fileID: 9114055820457696520}
   m_Layer: 0
-  m_Name: tree_02_0
+  m_Name: tree_alive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 4802332056271313475}
   - component: {fileID: 8619165355328876395}
   m_Layer: 0
-  m_Name: dacayed_tree_0
+  m_Name: tree_dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
