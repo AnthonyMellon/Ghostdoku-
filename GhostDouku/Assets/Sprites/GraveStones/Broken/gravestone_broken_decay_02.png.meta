@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 09bc9da47d7a34947afa4041f53038fd
 TextureImporter:
+<<<<<<< HEAD
   internalIDToNameTable:
   - first:
       213: 6767457227197162794
     second: gravestone_broken_decay_02_0
+=======
+  internalIDToNameTable: []
+>>>>>>> staging
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -44,7 +48,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
+<<<<<<< HEAD
   spriteMode: 2
+=======
+  spriteMode: 1
+>>>>>>> staging
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -78,6 +86,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< HEAD
   - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
@@ -126,6 +135,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+=======
+  spriteSheet:
+    serializedVersion: 2
+    sprites: []
+>>>>>>> staging
     outline: []
     physicsShape: []
     bones: []

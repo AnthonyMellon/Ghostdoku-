@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
             heldDownTimer = 0;
         }
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        print(target);
 
         //Animation control
         
