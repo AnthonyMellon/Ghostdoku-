@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 09bc9da47d7a34947afa4041f53038fd
+guid: 279df66b730595f46876658004416af7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6767457227197162794
-    second: gravestone_broken_decay_02_0
+      213: -6994905851076857969
+    second: bush_01_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -106,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gravestone_broken_decay_02_0
+      name: bush_01_0
       rect:
         serializedVersion: 2
-        x: 333
-        y: 1612
-        width: 218
-        height: 298
+        x: 2428
+        y: 1842
+        width: 1016
+        height: 557
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,8 +120,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a25acbb1e76daed50800000000000000
-      internalID: 6767457227197162794
+      spriteID: f8f2345603a1dee90800000000000000
+      internalID: -6994905851076857969
       vertices: []
       indices: 
       edges: []
