@@ -38,8 +38,7 @@ public class Clock : MonoBehaviour
             TimeSpan span = TimeSpan.FromSeconds(delta_time);
             string minute = LeadingZero(span.Minutes);
             string second = LeadingZero(span.Seconds);
-            string millisecond = LeadingZero(span.Milliseconds);
-            clock_.text = minute + ":" + second + ":" + millisecond;
+            clock_.text = minute + ":" + second;
 
         }
     }
