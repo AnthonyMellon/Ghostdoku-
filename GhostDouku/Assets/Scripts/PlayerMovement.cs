@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour {
-    public float moveSpeed;
+
+    public NavMeshAgent agent;
 
     private float heldDownTimer;
 
@@ -18,6 +20,9 @@ public class PlayerMovement : MonoBehaviour {
     public SpriteRenderer spriteRenderer;
 
     void Start() {
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
         target = transform.position;
         print(idleLeft);
     }
@@ -37,8 +42,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             heldDownTimer = 0;
         }
-        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        print(target);
+        agent.SetDestination(target);
 
         //Animation control
         
