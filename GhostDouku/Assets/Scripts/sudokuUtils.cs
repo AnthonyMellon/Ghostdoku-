@@ -23,7 +23,6 @@ public class sudokuUtils : MonoBehaviour
             int iRow = getRow(i);
             int iCol = getCol(i);
             int iBox = getBox(i);
-            
             //Loop through all numbers in the board, call them j
             for (int j = 0; j < board.Length; j++)
             {
@@ -68,4 +67,41 @@ public class sudokuUtils : MonoBehaviour
         int boxRow = Mathf.FloorToInt(getRow(index) / Mathf.Sqrt(sqrtBoardLength) * sqrtBoardLength);
         return boxCol + boxRow;
     }
+
+    public static bool checkWrong(int index)
+    {
+        int col = getCol(index);
+        int row = getRow(index);
+        
+        for(int i = 0; i < board.Length; i++)
+        {
+            int myCell = board[i];
+            if(i != index)
+            {
+                if (getRow(i) == row || getCol(i) == col ) 
+                {
+
+                    if (board[index] == board[i]) return true;
+                }
+            }
+        }
+
+        return false;
+        
+    }
+    
+    public static void genHint()
+    {
+        int index;
+        do
+        {
+            index = Random.Range(0, 81);
+        }while (board[index] != 0) ;
+
+
+        
+
+        
+    }
+
 }
