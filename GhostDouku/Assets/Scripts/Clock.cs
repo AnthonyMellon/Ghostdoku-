@@ -12,7 +12,8 @@ public class Clock : MonoBehaviour
     private Text clock_;
     private float delta_time;
     private bool stop_clock = false;
-    private static Clock instance;
+
+    public static Clock instance;
 
     private void Awake()
     {
@@ -58,5 +59,10 @@ public class Clock : MonoBehaviour
     private void onDisable()
     {
         GameEvents.OnGameOver -= onGameOver;
+    }
+
+    public Text GetCurrentTimeText()
+    {
+        return clock_;
     }
 }
