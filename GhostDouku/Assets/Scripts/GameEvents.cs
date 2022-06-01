@@ -33,5 +33,28 @@ public class GameEvents : MonoBehaviour
             OnGameOver();
     }
 
+    public delegate void ClearNumber();
+
+    public static event ClearNumber OnClearNumber;
+
+    public static void OnClearNumberMethod()
+    {
+        if (OnClearNumber != null)
+            OnClearNumber();
+    }
+
+    public delegate void BoardCompleted();
+
+    public static event BoardCompleted OnBoardCompleted;
+
+    public static void OnBoardCompletedMethod()
+    {
+        if (OnBoardCompleted != null)
+            OnBoardCompleted();
+    }
+
+
+
+
 }
 
