@@ -8,7 +8,15 @@ public class GraveInteraction : MonoBehaviour
 {
     bool triggered = false;
 
+    private GameSettings gameSettings;
+
+    void Start()
+    {
+        gameSettings  = GameSettings.Instance;
+    }
+
     void Update() {
+        
                 if (Input.GetMouseButtonDown(0) && triggered)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -16,7 +24,18 @@ public class GraveInteraction : MonoBehaviour
 
             if (hit.collider == this.GetComponent<BoxCollider2D>())
             {
-            SceneManager.LoadScene("Sudoku");
+                if(gameSettings.restorationLevel == 0)
+                {
+                    SceneManager.LoadScene("GhostScene");
+                }
+                if(gameSettings.restorationLevel == 1)
+                {
+                    SceneManager.LoadScene("GhostScene2");
+                }
+                if(gameSettings.restorationLevel == 2)
+                {
+                    SceneManager.LoadScene("GhostScene3");
+                }
             }
         }
     }
