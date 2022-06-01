@@ -113,7 +113,6 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             else
             {
                 isWrong = false;
-
             }
             
         }
@@ -144,7 +143,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         }
         else if (isWrong)
         {
-            image.color = new Color(1f, 0f, 0f, 1f); //White
+            image.color = new Color(1f, 0f, 0f, 0.6f); //White
             text.color = new Color(0.46f, 0.78f, 0.73f, 1f);
         }
         else
@@ -180,16 +179,8 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         {
             if (!defaultCell)
             {
-
-                    image.color = new Color(0.4f, 0.8f, 0.5f, 0.5f);//Pale-Yellow
-
+                image.color = new Color(0.4f, 0.8f, 0.5f, 0.5f);//Pale-Yellow
             }
         }
     }
 }
-
-//            if (sudokuUtils.checkWrong(square_index_))
-//            {
-//                image.color = new Color(1f, 0f, 0f, 1f); //White
-//text.color = new Color(0.46f, 0.78f, 0.73f, 1f);
-//            }
