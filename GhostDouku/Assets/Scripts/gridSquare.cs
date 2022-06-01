@@ -10,9 +10,12 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 {
     Image image;
     Text text;
+    
     public GameObject number_text;
     private int number_ = 0;
     public GameObject gridBox;
+
+    private bool newGame = true;
 
     private bool selected_ = false;
     private int square_index_ = -1;
@@ -33,6 +36,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     public void Start()
     {
+        newGame = true;
         image = gridBox.transform.Find("Image").GetComponent<Image>(); //The image component of the selected cell
         text = gridBox.transform.Find("Text").GetComponent<Text>();
         selected_ = false;
@@ -73,8 +77,10 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
 
             //Check if the sudoku has been solved
             print($"Board is solved: {sudokuUtils.isSolved()}");
-            if(sudokuUtils.isSolved())
+            if(sudokuUtils.isSolved() && !newGame)
             {
+
+                GameObject.Find("gameManager").GetComponent<GameSettings>().restorationLevel++;
                 SceneManager.LoadScene("Hub");
             }
         }
@@ -82,6 +88,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        newGame = false;
         selected_ = true;
         GameEvents.SquareSelectedMethod(square_index_);
     }

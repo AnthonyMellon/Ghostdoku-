@@ -15,15 +15,15 @@ public class GameEngine : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+            // Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            // RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
 
-            if (hit.transform == this.transform)
-            {
-                SceneManager.LoadScene("Sudoku");
-            }
+            // if (hit.transform == this.transform)
+            // {
+            SceneManager.LoadScene("Sudoku");
+            // }
         }
     }
 }

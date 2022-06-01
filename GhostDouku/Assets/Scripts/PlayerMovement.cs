@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        target = transform.position;
+        // target = transform.position;
         print(idleLeft);
     }
 
