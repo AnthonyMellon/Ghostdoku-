@@ -20,6 +20,7 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
     private bool selected_ = false;
     private int square_index_ = -1;
     public bool has_default_value_ = false;
+    public bool isWrong = false;
 
     public void SetHasDefaultValue(bool has_default)
     {
@@ -111,6 +112,15 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         if (selected_)
         {
             SetNumber(number);
+            if (sudokuUtils.checkWrong(square_index_))
+            {
+                isWrong = true;
+            }
+            else
+            {
+                isWrong = false;
+            }
+            
         }
     }
     public void OnSquareSelected(int sqaure_index)
@@ -130,18 +140,24 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
         int myCol = sudokuUtils.getCol(squareIndex); //The col of the selected cell
 
         bool defaultCell = transform.parent.Find($"Cell {squareIndex}").GetComponent<gridSquare>().has_default_value_;
-
-        //Blank all the cells colors
+        Transform parent = transform.root;
         if (has_default_value_)
         {
             image.color = new Color(0.35f, 0.35f, 0.35f, 1f); //Gray
             text.color = new Color(0.1f, 0.1f, 0.1f, 1f);
+
+        }
+        else if (isWrong)
+        {
+            image.color = new Color(1f, 0f, 0f, 0.6f); //White
+            text.color = new Color(0.46f, 0.78f, 0.73f, 1f);
         }
         else
         {
-            image.color = new Color(1f, 1f, 1f, 0.0f); //White
+            image.color = new Color(1f, 1f, 1f, 0f); //White
             text.color = new Color(0.46f, 0.78f, 0.73f, 1f);
         }
+
 
         //If this is not the selected cell
         if (square_index_ != squareIndex)
