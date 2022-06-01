@@ -584,9 +584,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1901874719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a7dcf8ed0fb79b4f95acf9fd33a5b24, type: 3}
+  m_Script: {fileID: 11500000, guid: b53c062e4241e1e45a49cc7d248017ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Narrative1: {fileID: 2107138561}
+  Narrative2: {fileID: 1131625074}
+  Narrative3: {fileID: 986795705}
+  Narrative4: {fileID: 1916453345}
 --- !u!114 &1901874722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,7 +636,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1901874721}
-        m_TargetAssemblyTypeName: GoToHub, Assembly-CSharp
+        m_TargetAssemblyTypeName: Narrative, Assembly-CSharp
         m_MethodName: Home
         m_Mode: 3
         m_Arguments:
