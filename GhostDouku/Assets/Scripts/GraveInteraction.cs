@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using SpriteGlow;
+using SpriteGlow;
 using UnityEngine.SceneManagement;
 
 public class GraveInteraction : MonoBehaviour
 {
-    public bool triggered = false;
-    public GameObject narrative;
+    bool triggered = false;
 
     private GameSettings gameSettings;
 
@@ -41,18 +40,14 @@ public class GraveInteraction : MonoBehaviour
         }
     }
     void OnTriggerEnter2D(Collider2D collision) {
-        //transform.GetChild(0).GetComponent<SpriteGlowEffect>().OutlineWidth = 2;
-        //transform.GetChild(2).GetComponent<SpriteGlowEffect>().OutlineWidth = 2;
-        transform.GetChild(3).gameObject.SetActive(true);
-        if (!gameSettings.seenNarrative4)
-        narrative.GetComponent<Narrative>().Narrative4.SetActive(true);
-        //GameObject.Find("ghost_idle_hidden_01_0").SetActive(true);
+        transform.GetChild(0).GetComponent<SpriteGlowEffect>().OutlineWidth = 2;
+        transform.GetChild(2).GetComponent<SpriteGlowEffect>().OutlineWidth = 2;
         Debug.Log("Enter");
         triggered = true;
     }
     void OnTriggerExit2D(Collider2D other) {
-        //transform.GetChild(0).GetComponent<SpriteGlowEffect>().OutlineWidth = 0;
-        //transform.GetChild(2).GetComponent<SpriteGlowEffect>().OutlineWidth = 0;
+        transform.GetChild(0).GetComponent<SpriteGlowEffect>().OutlineWidth = 0;
+        transform.GetChild(2).GetComponent<SpriteGlowEffect>().OutlineWidth = 0;
         Debug.Log("Exit");
         triggered = false;
     }
