@@ -7,21 +7,24 @@ public class NarrativeTrigger : MonoBehaviour
 {
     private GameSettings gameSettings;
     public GameObject narrative;
+    public GameObject button1;
 
     void Start()
     {
         gameSettings = GameSettings.Instance;
     }
-        private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("exiting");
         if (gameSettings.seenNarrative3)
         {
             narrative.GetComponent<Narrative>().Narrative3.SetActive(false);
+            button1.SetActive(false);
         }
         else
         {
             narrative.GetComponent<Narrative>().Narrative3.SetActive(true);
+            button1.SetActive(true);
         }
     }
 }

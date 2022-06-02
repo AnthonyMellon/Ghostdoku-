@@ -12,6 +12,7 @@ public class Narrative : MonoBehaviour
     public GameObject Narrative4;
     public GameObject player;
     private GameSettings gameSettings;
+    public GameObject button1;
 
     //private int taps;
     void Start() {
@@ -42,17 +43,20 @@ public class Narrative : MonoBehaviour
         {
             gameSettings.seenNarrative2 = true;
             Narrative2.SetActive(false);
+            button1.SetActive(false);
         }
         else if (!gameSettings.seenNarrative3)
         {
             gameSettings.seenNarrative3 = true;
             Narrative3.SetActive(false);
+            button1.SetActive(false);
         }
         else if (!gameSettings.seenNarrative4)
         {
             gameSettings.seenNarrative4 = true;
             Narrative4.SetActive(false);
             GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
+            button1.SetActive(false);
         }
     }
 

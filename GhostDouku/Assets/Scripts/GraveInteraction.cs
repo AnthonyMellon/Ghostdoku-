@@ -8,6 +8,7 @@ public class GraveInteraction : MonoBehaviour
 {
     public bool triggered = false;
     public GameObject narrative;
+    public GameObject button1;
 
     private GameSettings gameSettings;
 
@@ -45,6 +46,7 @@ public class GraveInteraction : MonoBehaviour
         transform.GetChild(2).GetComponent<SpriteGlowEffect>().OutlineWidth = 2;
         transform.GetChild(3).gameObject.SetActive(true);
         if (!gameSettings.seenNarrative4)
+        button1.SetActive(true);
         narrative.GetComponent<Narrative>().Narrative4.SetActive(true);
         //GameObject.Find("ghost_idle_hidden_01_0").SetActive(true);
         Debug.Log("Enter");
