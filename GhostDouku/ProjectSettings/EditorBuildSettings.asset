@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GhostScene3.unity
     guid: e68865c9b147ff849aa55598ce383838
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: 1c2f2678260d13d47beab24548110a30
   m_configObjects: {}
