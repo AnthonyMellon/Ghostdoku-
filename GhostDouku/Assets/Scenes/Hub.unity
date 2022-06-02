@@ -5331,10 +5331,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 677844926, guid: 7bb6db2735d27d14386528b20bfc8734, type: 3}
-      propertyPath: button1
-      value: 
-      objectReference: {fileID: 1593474784}
-    - target: {fileID: 677844926, guid: 7bb6db2735d27d14386528b20bfc8734, type: 3}
       propertyPath: narrative
       value: 
       objectReference: {fileID: 2021307489}
@@ -8671,7 +8667,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   narrative: {fileID: 2021307489}
-  button1: {fileID: 1593474784}
 --- !u!61 &1361875562
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8696,7 +8691,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 8}
+  m_Size: {x: 6, y: 10}
   m_EdgeRadius: 0
 --- !u!4 &1361875563
 Transform:
@@ -10400,6 +10395,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3800420241428334259, guid: 7bb6db2735d27d14386528b20bfc8734, type: 3}
   m_PrefabInstance: {fileID: 759390480}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1545795510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545795508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb84ffbe5d569a84d8cd241cf9b660a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1545795512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10688,7 +10695,6 @@ MonoBehaviour:
   Narrative3: {fileID: 851755143}
   Narrative4: {fileID: 1493485502}
   player: {fileID: 0}
-  button1: {fileID: 1593474784}
 --- !u!114 &1593474787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12806,7 +12812,6 @@ MonoBehaviour:
   Narrative3: {fileID: 851755143}
   Narrative4: {fileID: 1493485502}
   player: {fileID: 254531324}
-  button1: {fileID: 0}
 --- !u!114 &2021307491
 MonoBehaviour:
   m_ObjectHideFlags: 0
