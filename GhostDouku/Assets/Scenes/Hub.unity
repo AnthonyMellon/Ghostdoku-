@@ -4795,6 +4795,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  glowColor: {r: 0, g: 0.5603447, b: 1, a: 1}
+  glowBrightness: 2
+  outlineWidth: 0
+  alphaThreshold: 0.2
+  drawOutside: 1
+  enableInstancing: 0
 --- !u!1 &697851958
 GameObject:
   m_ObjectHideFlags: 0
@@ -10401,22 +10407,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb84ffbe5d569a84d8cd241cf9b660a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Renderer>k__BackingField: {fileID: 1545795511}
-  glowColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
-  glowBrightness: 2
-  outlineWidth: 1
-  alphaThreshold: 0.01
-  drawOutside: 0
-  enableInstancing: 0
---- !u!212 &1545795511 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3800420241428334257, guid: 7bb6db2735d27d14386528b20bfc8734, type: 3}
-  m_PrefabInstance: {fileID: 759390480}
+--- !u!114 &1545795512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545795508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0, g: 0.5603447, b: 1, a: 1}
+  glowBrightness: 2
+  outlineWidth: 0
+  alphaThreshold: 0.2
+  drawOutside: 1
+  enableInstancing: 0
 --- !u!4 &1556478200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2991123187237125188, guid: 9d7bced944e1f18499e33e04d7eb9590, type: 3}
