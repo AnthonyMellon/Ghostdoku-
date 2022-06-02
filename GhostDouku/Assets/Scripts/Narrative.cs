@@ -6,17 +6,57 @@ using UnityEngine.SceneManagement;
 public class Narrative : MonoBehaviour
 {
 
-    [SerializeField] GameObject Narrative1;
-    [SerializeField] GameObject Narrative2;
-    [SerializeField] GameObject Narrative3;
-    [SerializeField] GameObject Narrative4;
-    private int taps;
+    public GameObject Narrative1;
+    public GameObject Narrative2;
+    public GameObject Narrative3;
+    public GameObject Narrative4;
+    public GameObject player;
+    private GameSettings gameSettings;
+
+    //private int taps;
     void Start() {
-        taps = 0;
+        gameSettings = GameSettings.Instance;
+        if (gameSettings.seenNarrative1)
+        {
+            Narrative1.SetActive(false);
+        }
+        if (gameSettings.seenNarrative2)
+        {
+            Narrative2.SetActive(false);
+        }
+        //taps = 0;
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
 
     }
 
-    public void Home(int sceneID)
+    public void NarrativeClick()
+    {
+        if (!gameSettings.seenNarrative1)
+        {
+            gameSettings.seenNarrative1 = true;
+            Narrative1.SetActive(false);
+        }else if(!gameSettings.seenNarrative2)
+        {
+            gameSettings.seenNarrative2 = true;
+            Narrative2.SetActive(false);
+        }
+        else if (!gameSettings.seenNarrative3)
+        {
+            gameSettings.seenNarrative3 = true;
+            Narrative3.SetActive(false);
+        }
+        else if (!gameSettings.seenNarrative4)
+        {
+            gameSettings.seenNarrative4 = true;
+            Narrative4.SetActive(false);
+            GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
+        }
+    }
+
+    /*public void Home(int sceneID)
     {
         taps++;
         Debug.Log(taps);
@@ -27,14 +67,16 @@ public class Narrative : MonoBehaviour
             break;
             case 2:
             Narrative2.SetActive(false);
+            player.GetComponent<PlayerMovement>().canMove = true;
             break;
             case 3:
             Narrative3.SetActive(false);
             break;
             default:
-            SceneManager.LoadScene(sceneID);
+            Narrative4.SetActive(false);
+                GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
             break;
         }
         
-    }
+    }*/
 }
