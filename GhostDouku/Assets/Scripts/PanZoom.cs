@@ -31,10 +31,11 @@ public class PanZoom : MonoBehaviour {
             float difference = currentMagnitude - prevMagnitude;
 
             zoom(difference * 0.01f);
-        }else if(Input.GetMouseButton(0)){
-            Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Camera.main.transform.position += direction;
         }
+        // else if(Input.GetMouseButton(0)){
+        //     Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     Camera.main.transform.position += direction;
+        // }
         zoom(Input.GetAxis("Mouse ScrollWheel"));
 
         transform.position = new Vector3

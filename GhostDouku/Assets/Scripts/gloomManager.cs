@@ -100,7 +100,7 @@ public class gloomManager : MonoBehaviour
                 grave4.GetComponent<SpriteRenderer>().enabled = true;
                 //ghost change
                 Transform ghost3 = gravestone.transform.Find("ghost_idle_09_0");
-                ghost3.GetComponent<SpriteRenderer>().enabled = false;
+                ghost3.GetComponent<SpriteRenderer>().enabled = true;
                 Transform ghost4 = gravestone.transform.Find("ghost_idle_hidden_01_0");
                 ghost4.GetComponent<SpriteRenderer>().enabled = false;
                 
