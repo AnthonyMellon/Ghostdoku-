@@ -12,7 +12,7 @@ public class NarrativeTrigger : MonoBehaviour
     {
         gameSettings = GameSettings.Instance;
     }
-        private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("exiting");
         if (gameSettings.seenNarrative3)
@@ -21,7 +21,9 @@ public class NarrativeTrigger : MonoBehaviour
         }
         else
         {
+            GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
             narrative.GetComponent<Narrative>().Narrative3.SetActive(true);
+            
         }
     }
 }

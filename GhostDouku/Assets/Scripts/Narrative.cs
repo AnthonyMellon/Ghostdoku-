@@ -18,6 +18,7 @@ public class Narrative : MonoBehaviour
         gameSettings = GameSettings.Instance;
         if (gameSettings.seenNarrative1)
         {
+            GameObject.Find("Button").transform.localScale = new Vector3(0, 0, 0);
             Narrative1.SetActive(false);
         }
         if (gameSettings.seenNarrative2)
@@ -42,16 +43,21 @@ public class Narrative : MonoBehaviour
         {
             gameSettings.seenNarrative2 = true;
             Narrative2.SetActive(false);
+            GameObject.Find("Button").transform.localScale = new Vector3(0, 0, 0);
+
         }
         else if (!gameSettings.seenNarrative3)
         {
             gameSettings.seenNarrative3 = true;
             Narrative3.SetActive(false);
+            GameObject.Find("Button").transform.localScale = new Vector3(0, 0, 0);
         }
         else if (!gameSettings.seenNarrative4)
         {
             gameSettings.seenNarrative4 = true;
+            GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
             Narrative4.SetActive(false);
+            GameObject.Find("Button").SetActive(false);
             GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
         }
     }

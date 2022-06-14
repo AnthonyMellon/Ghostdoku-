@@ -18,7 +18,7 @@ public class GraveInteraction : MonoBehaviour
 
     void Update() {
         
-                if (Input.GetMouseButtonDown(0) && triggered)
+        if (Input.GetMouseButtonDown(0) && triggered)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
@@ -45,10 +45,13 @@ public class GraveInteraction : MonoBehaviour
         transform.GetChild(2).GetComponent<SpriteGlowEffect>().OutlineWidth = 2;
         transform.GetChild(3).gameObject.SetActive(true);
         if (!gameSettings.seenNarrative4)
-        narrative.GetComponent<Narrative>().Narrative4.SetActive(true);
-        //GameObject.Find("ghost_idle_hidden_01_0").SetActive(true);
-        Debug.Log("Enter");
-        triggered = true;
+        {
+            GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
+            narrative.GetComponent<Narrative>().Narrative4.SetActive(true);
+            //GameObject.Find("ghost_idle_hidden_01_0").SetActive(true);
+            Debug.Log("Enter");
+            triggered = true;
+        }
     }
     void OnTriggerExit2D(Collider2D other) {
         transform.GetChild(0).GetComponent<SpriteGlowEffect>().OutlineWidth = 0;
