@@ -12812,7 +12812,7 @@ MonoBehaviour:
   Narrative2: {fileID: 713789893}
   Narrative3: {fileID: 851755143}
   Narrative4: {fileID: 1493485502}
-  player: {fileID: 254531324}
+  player: {fileID: 0}
 --- !u!114 &2021307491
 MonoBehaviour:
   m_ObjectHideFlags: 0

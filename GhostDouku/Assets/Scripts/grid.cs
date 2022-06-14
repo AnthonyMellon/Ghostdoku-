@@ -100,7 +100,6 @@ public class grid : MonoBehaviour
     private void SetGridNumbers()
     {
         currentSudoku = Random.Range(0, 100);
-        currentSudoku = 0;
         string[] sudokuAsStrings;
         if (difficulty == 1)
         {

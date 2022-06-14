@@ -30,7 +30,6 @@ public class Narrative : MonoBehaviour
         {
             player = GameObject.Find("Player");
         }
-
     }
 
     public void NarrativeClick()
@@ -58,6 +57,7 @@ public class Narrative : MonoBehaviour
             GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
             Narrative4.SetActive(false);
             GameObject.Find("Button").SetActive(false);
+            GameObject.Find("Image").SetActive(false);            
             GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
         }
     }

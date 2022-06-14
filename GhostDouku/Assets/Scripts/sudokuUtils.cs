@@ -61,14 +61,8 @@ public class sudokuUtils : MonoBehaviour
     }
 
     //Return the box a given index is in
-    public static int getBox(int index)
-    {
-        int boxCol = Mathf.FloorToInt(getCol(index) / Mathf.Sqrt(sqrtBoardLength));
-        int boxRow = Mathf.FloorToInt(getRow(index) / Mathf.Sqrt(sqrtBoardLength) * sqrtBoardLength);
-        return boxCol + boxRow;
-    }
 
-    public static int testGetBox(int index)
+    public static int getBox(int index)
     {
         //m = number of rows and cols in each box
         int m = 3;
@@ -83,13 +77,13 @@ public class sudokuUtils : MonoBehaviour
     {
         int col = getCol(index);
         int row = getRow(index);
-        int box = testGetBox(index);
+        int box = getBox(index);
 
         for(int i = 0; i < board.Length; i++)
         {
             if(i != index)
             {
-                if (getRow(i) == row || getCol(i) == col || testGetBox(i) == box) 
+                if (getRow(i) == row || getCol(i) == col || getBox(i) == box) 
                 {
 
                     if (board[index] == board[i]) return true;
