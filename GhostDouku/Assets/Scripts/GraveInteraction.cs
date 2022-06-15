@@ -18,13 +18,14 @@ public class GraveInteraction : MonoBehaviour
 
     void Update() {
         
-        if (Input.GetMouseButtonDown(0) && triggered)
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
 
+            //print("I've been clicked!");
             if (hit.collider == this.GetComponent<BoxCollider2D>())
-            {
+            {                
                 if(gameSettings.restorationLevel == 0)
                 {
                     SceneManager.LoadScene("GhostScene");

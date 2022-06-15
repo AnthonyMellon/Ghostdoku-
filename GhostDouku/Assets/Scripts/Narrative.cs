@@ -34,6 +34,7 @@ public class Narrative : MonoBehaviour
 
     public void NarrativeClick()
     {
+        print("Hello!");
         if (!gameSettings.seenNarrative1)
         {
             gameSettings.seenNarrative1 = true;
@@ -57,7 +58,11 @@ public class Narrative : MonoBehaviour
             GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
             Narrative4.SetActive(false);
             GameObject.Find("Button").SetActive(false);
-            GameObject.Find("Image").SetActive(false);            
+            //GameObject.Find("Image").SetActive(false);            
+            GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
+        }
+        else
+        {
             GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
         }
 
