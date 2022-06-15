@@ -5335,6 +5335,10 @@ PrefabInstance:
       propertyPath: narrative
       value: 
       objectReference: {fileID: 2021307489}
+    - target: {fileID: 677844926, guid: 7bb6db2735d27d14386528b20bfc8734, type: 3}
+      propertyPath: triggered
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 713297012, guid: 7bb6db2735d27d14386528b20bfc8734, type: 3}
       propertyPath: m_IsActive
       value: 0

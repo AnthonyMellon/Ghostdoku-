@@ -60,6 +60,7 @@ public class Narrative : MonoBehaviour
             GameObject.Find("Image").SetActive(false);            
             GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
         }
+
     }
 
     /*public void Home(int sceneID)
