@@ -30,7 +30,14 @@ public class Narrative : MonoBehaviour
         {
             player = GameObject.Find("Player");
         }
+
+        if(gameSettings.seenNarrative4)
+        {
+            GameObject.Find("gravestonePlayable1").transform.GetChild(3).gameObject.SetActive(true);
+        }
     }
+
+
 
     public void NarrativeClick()
     {
@@ -63,7 +70,7 @@ public class Narrative : MonoBehaviour
         }
         else
         {
-            GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
+            GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;            
         }
 
     }

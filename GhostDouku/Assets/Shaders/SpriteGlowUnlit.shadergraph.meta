@@ -1,12 +1,10 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:GhostDouku/Assets/Shaders/SpriteGlowUnlit.shadergraph.meta
 guid: 3710d6a9fff1a3f40a3e990b81230c94
-=======
-guid: 662479a586c3e194494dd94d9e3471a7
-folderAsset: yes
->>>>>>> staging:GhostDouku/Assets/Animation.meta
-DefaultImporter:
+ScriptedImporter:
+  internalIDToNameTable: []
   externalObjects: {}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}

@@ -28,15 +28,40 @@ public class GraveInteraction : MonoBehaviour
             {                
                 if(gameSettings.restorationLevel == 0)
                 {
-                    SceneManager.LoadScene("GhostScene");
+                    if(!gameSettings.seenTut)
+                    {
+                        gameSettings.seenTut = true;
+                        SceneManager.LoadScene("GhostScene");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Sudoku");
+                    }                    
                 }
                 if(gameSettings.restorationLevel == 1)
                 {
-                    SceneManager.LoadScene("GhostScene2");
+                    if(!gameSettings.seenGhostScene2)
+                    {
+                        gameSettings.seenGhostScene2 = true;
+                        SceneManager.LoadScene("GhostScene2");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Sudoku");
+                    }
+                    
                 }
                 if(gameSettings.restorationLevel == 2)
                 {
-                    SceneManager.LoadScene("GhostScene3");
+                    if (!gameSettings.seenGhostScene3)
+                    {
+                        gameSettings.seenGhostScene3 = true;
+                        SceneManager.LoadScene("GhostScene3");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Sudoku");
+                    }
                 }
             }
         }
