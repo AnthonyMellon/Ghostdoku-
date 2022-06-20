@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Music : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] Slider volumeSlider;
+
     void Start()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        DontDestroyOnLoad(transform.gameObject);     
     }
+
 
 }
