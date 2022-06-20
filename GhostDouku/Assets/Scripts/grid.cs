@@ -26,8 +26,11 @@ public class grid : MonoBehaviour
     public TextAsset medSudokus;
     public TextAsset hardSudokus;
 
+    public GameObject tileParent;
+
     public TextAsset veryEasy;
     private List<GameObject> gridSquares = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +71,7 @@ public class grid : MonoBehaviour
                 gridSquares[gridSquares.Count - 1].transform.parent = this.transform;
                 gridSquares[gridSquares.Count - 1].transform.localScale = new Vector3(squareScale, squareScale, squareScale);
                 gridSquares[gridSquares.Count - 1].transform.name = $"Cell {square_index}";
+                gridSquares[gridSquares.Count - 1].transform.parent = tileParent.transform;
                 square_index++;
             }
 
@@ -100,6 +104,7 @@ public class grid : MonoBehaviour
     private void SetGridNumbers()
     {
         currentSudoku = Random.Range(0, 100);
+        difficulty = GameObject.Find("gameManager").GetComponent<GameSettings>().restorationLevel + 1;
         string[] sudokuAsStrings;
         if (difficulty == 1)
         {

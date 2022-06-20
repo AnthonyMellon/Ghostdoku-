@@ -7,6 +7,7 @@ public class NarrativeTrigger : MonoBehaviour
 {
     private GameSettings gameSettings;
     public GameObject narrative;
+    public GameObject background;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class NarrativeTrigger : MonoBehaviour
         {
             GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
             narrative.GetComponent<Narrative>().Narrative3.SetActive(true);
+            background.SetActive(true);
             
         }
     }

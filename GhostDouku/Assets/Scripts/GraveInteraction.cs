@@ -8,12 +8,14 @@ public class GraveInteraction : MonoBehaviour
 {
     public bool triggered = false;
     public GameObject narrative;
+    public GameObject background;
 
     private GameSettings gameSettings;
 
     void Start()
     {
         gameSettings  = GameSettings.Instance;
+        background = GameObject.Find("Background");
     }
 
     void Update() {
@@ -26,17 +28,45 @@ public class GraveInteraction : MonoBehaviour
             //print("I've been clicked!");
             if (hit.collider == this.GetComponent<BoxCollider2D>())
             {                
-                if(gameSettings.restorationLevel == 0)
+                if (gameSettings.restorationLevel == 0)
                 {
-                    SceneManager.LoadScene("GhostScene");
+                    if(!gameSettings.seenTut)
+                    {
+                        gameSettings.seenTut = true;
+                        SceneManager.LoadScene("GhostScene");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Sudoku");
+                        background.SetActive(false);
+                    }                    
                 }
                 if(gameSettings.restorationLevel == 1)
                 {
-                    SceneManager.LoadScene("GhostScene2");
+                    if(!gameSettings.seenGhostScene2)
+                    {
+                        gameSettings.seenGhostScene2 = true;
+                        SceneManager.LoadScene("GhostScene2");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Sudoku");
+                        background.SetActive(false);
+                    }
+                    
                 }
                 if(gameSettings.restorationLevel == 2)
                 {
-                    SceneManager.LoadScene("GhostScene3");
+                    if (!gameSettings.seenGhostScene3)
+                    {
+                        gameSettings.seenGhostScene3 = true;
+                        SceneManager.LoadScene("GhostScene3");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Sudoku");
+                        background.SetActive(false);
+                    }
                 }
             }
         }
@@ -49,6 +79,7 @@ public class GraveInteraction : MonoBehaviour
         {
             GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
             narrative.GetComponent<Narrative>().Narrative4.SetActive(true);
+            background.SetActive(true);
             //GameObject.Find("ghost_idle_hidden_01_0").SetActive(true);
             Debug.Log("Enter");
             triggered = true;

@@ -7,11 +7,14 @@ public class GameSettings : MonoBehaviour
     private static GameSettings instance;    
 
     public int previousRestorationLevel;
-    public int restorationLevel;
+    public int restorationLevel = 0;
     public bool seenNarrative1 = false;
     public bool seenNarrative2 = false;
     public bool seenNarrative3 = false;
     public bool seenNarrative4 = false;
+    public bool seenTut = false;
+    public bool seenGhostScene2 = false;
+    public bool seenGhostScene3 = false;
     public static GameSettings Instance
     {
         get { return instance; }
