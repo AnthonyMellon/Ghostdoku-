@@ -215,7 +215,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 239805615}
-        m_TargetAssemblyTypeName: Music, Assembly-CSharp
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 1
         m_Arguments:
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 239805612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc5b1e108301c54e8b15026f791ac72, type: 3}
+  m_Script: {fileID: 11500000, guid: 476a873102cd77946822a7e0f7ad3f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   volumeSlider: {fileID: 239805614}
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 276915870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc5b1e108301c54e8b15026f791ac72, type: 3}
+  m_Script: {fileID: 11500000, guid: 476a873102cd77946822a7e0f7ad3f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   volumeSlider: {fileID: 239805614}
