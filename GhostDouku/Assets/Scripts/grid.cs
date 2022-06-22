@@ -31,6 +31,8 @@ public class grid : MonoBehaviour
     public TextAsset veryEasy;
     private List<GameObject> gridSquares = new List<GameObject>();
 
+    public GameObject winScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +108,8 @@ public class grid : MonoBehaviour
         currentSudoku = Random.Range(0, 100);
         difficulty = GameObject.Find("gameManager").GetComponent<GameSettings>().restorationLevel + 1;
         string[] sudokuAsStrings;
+/*        difficulty = 0;
+        currentSudoku = 0;*/
         if (difficulty == 1)
         {
             sudokuAsStrings = easySudokus.ToString().Split('\n')[currentSudoku].Split(',');

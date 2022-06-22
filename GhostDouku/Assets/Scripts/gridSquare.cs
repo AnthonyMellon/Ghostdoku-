@@ -80,9 +80,14 @@ public class gridSquare : Selectable, IPointerClickHandler, ISubmitHandler, IPoi
             print($"Board is solved: {sudokuUtils.isSolved()}");
             if(sudokuUtils.isSolved() && !newGame)
             {
-
                 GameObject.Find("gameManager").GetComponent<GameSettings>().restorationLevel++;
-                SceneManager.LoadScene("Hub");
+                Time.timeScale = 0f;
+                transform.root.GetComponent<grid>().winScreen.SetActive(true);
+
+                Transform timer = transform.root.Find("Timer");
+
+                timer.SetParent(transform.root.GetComponent<grid>().winScreen.transform);
+                timer.GetComponent<RectTransform>().anchoredPosition = new Vector2(-455, -455);
             }
         }
            
