@@ -11,6 +11,7 @@ public class Narrative : MonoBehaviour
     public GameObject Narrative3;
     public GameObject Narrative4;
     public GameObject player;
+    public GameObject background;
     private GameSettings gameSettings;
 
     //private int taps;
@@ -25,16 +26,30 @@ public class Narrative : MonoBehaviour
         {
             Narrative2.SetActive(false);
         }
+        if(gameSettings.seenNarrative3 || gameSettings.seenNarrative4)
+        {
+            background.SetActive(false);
+        }        
         //taps = 0;
         if (player == null)
         {
             player = GameObject.Find("Player");
         }
+        if(background == null)
+        {
+            background = GameObject.Find("Background");
+        }
+
+        if(gameSettings.seenNarrative4)
+        {
+            GameObject.Find("gravestonePlayable1").transform.GetChild(3).gameObject.SetActive(true);
+        }
     }
+
+
 
     public void NarrativeClick()
     {
-        print("Hello!");
         if (!gameSettings.seenNarrative1)
         {
             gameSettings.seenNarrative1 = true;
@@ -43,13 +58,14 @@ public class Narrative : MonoBehaviour
         {
             gameSettings.seenNarrative2 = true;
             Narrative2.SetActive(false);
-            GameObject.Find("Button").transform.localScale = new Vector3(0, 0, 0);
-
+            background.SetActive(false);
+            GameObject.Find("Button").transform.localScale = new Vector3(0, 0, 0);            
         }
         else if (!gameSettings.seenNarrative3)
         {
             gameSettings.seenNarrative3 = true;
             Narrative3.SetActive(false);
+            background.SetActive(false);
             GameObject.Find("Button").transform.localScale = new Vector3(0, 0, 0);
         }
         else if (!gameSettings.seenNarrative4)
@@ -57,13 +73,14 @@ public class Narrative : MonoBehaviour
             gameSettings.seenNarrative4 = true;
             GameObject.Find("Button").transform.localScale = new Vector3(1, 1, 1);
             Narrative4.SetActive(false);
+            background.SetActive(false);
             GameObject.Find("Button").SetActive(false);
             //GameObject.Find("Image").SetActive(false);            
             GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
         }
         else
         {
-            GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;
+            GameObject.Find("gravestonePlayable1").GetComponent<GraveInteraction>().triggered = true;            
         }
 
     }

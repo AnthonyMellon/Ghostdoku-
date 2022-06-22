@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GoToHub : MonoBehaviour
 {
-
     public void Home(int sceneID)
     {
         Time.timeScale = 1f;
